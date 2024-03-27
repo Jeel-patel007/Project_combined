@@ -252,6 +252,15 @@ app.get("/Dashboard/dynamictable", (req, res) => {
     }
 });
 
+app.get("/Dashboard/kukucube", (req, res) => {
+    try {
+        res.render("exerciese-2");
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
 function ExecuteData(query) {
     return new Promise((resolve, reject) => {
         connection.query(query, (error, elements) => {
