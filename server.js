@@ -261,6 +261,15 @@ app.get("/Dashboard/kukucube", (req, res) => {
     }
 });
 
+app.get("/Dashboard/tiktactoe", (req, res) => {
+    try {
+        res.render("tictak")
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
 function ExecuteData(query) {
     return new Promise((resolve, reject) => {
         connection.query(query, (error, elements) => {
