@@ -1,0 +1,815 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <title>employee_Job_form</title>
+  <style>
+    #error {
+      display: none;
+    }
+
+    .dynamic {
+      color: red;
+      font-size: 15px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h1 {
+      color: chocolate;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 25px;
+    }
+
+    table {
+      font-family: 'Times New Roman', Times, serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="section">
+    <div class="container">
+      <h1>Job Application Form</h1>
+
+      <br />
+      <form method="post" action="/Dashboard/save" id="form" name="myform" autocomplete="on"
+        onsubmit="return validForm()">
+        <div class="basic-detail">
+          <fieldset><br>
+            <table>
+              <legend>Basic Details </legend>
+              <tr>
+                <td>
+                  <label for="firstname">First Name </label>
+                  <input type="text" id="firstname" name="firstname" class="required" value="<%= data[0].first_name %>">
+
+                </td>
+                <td>
+                  <label for="lastname">Last Name</label>
+                  <input type="text" id="lastname" name="lastname" class="required" value="<%= data[0].last_name %>">
+
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="designation">Designation</label>
+                  <input type="text" id="designation1" name="designation1" class="required"
+                    value="<%= data[0].designation1 %>">
+
+                </td>
+                <td>
+                  <label for="email">Email</label>
+                  <input type="text" name="email" id="email" class="required" value="<%= data[0].email %>">
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="address1">Address-1</label>
+                  <input type="text" name="address1" id="address1" class="required" value="<%= data[0].address1 %>">
+
+                </td>
+                <td>
+                  <label for="address2">Address-2</label>
+                  <input type="text" name="address2" id="address2" class="required" value="<%= data[0].address2 %>">
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="phonenumber">Phone Number</label>
+                  <input type="text" name="phonenumber" id="phonenumber" class="required"
+                    value="<%= data[0].phonenumber %>">
+
+                </td>
+                <td>
+                  <label for="city">City</label>
+                  <input type="text" name="city" id="city" class="required" value="<%= data[0].city %>">
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="state">State</label>
+                  <select name="state" id="state" class="required">
+                    <option value="Gujrat">Gujrat</option>
+                    <option value="UttarPradesh">UttarPradesh</option>
+                    <option value="Rajastan">Rajastan</option>
+                    <option value="MadhyaPradesh">MadhyaPradesh</option>
+                  </select>
+
+                </td>
+                <td>
+                  <label for="zipcode">Zipcode</label>
+                  <input type="text" name="zipcode" id="zipcode" class="required" value="<%= data[0].zipcode %>">
+
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+
+                  <div id="gender">
+                    <label for="gender">gender:</label>
+                    <input type="radio" id="male" name="gender" value="male" <% if(data[0].xender==='male' ){ %>
+                    checked
+                    <% } %> >
+                      <label for="male">male</label>
+                      <input type="radio" id="female" name="gender" value="female" <% if(data[0].xender==='female' ){ %>
+                      checked
+                      <% } %> >
+                        <label for="female">female</label>
+
+                  </div>
+
+                </td>
+                <td>
+                  <label for="dateofbirth">Date Of Birth</label>
+                  <input type="text" id="dateofbirth" name="dateofbirth" placeholder="dd-mm-yyyy" class="required"
+                    value="<%= data[0].dateofbirth %>">
+
+                </td>
+
+
+              </tr>
+              <tr>
+                <td>
+                  <label for="rstatus">Relationship Status</label>
+                  <select name="rstatus" id="rstatus" class="required">
+                    <option value="single">single</option>
+                    <option value="married">married</option>
+
+                </td>
+              </tr>
+            </table>
+
+
+          </fieldset><br>
+        </div>
+
+
+        <fieldset><br>
+          <legend>Education Details </legend>
+          <div>
+            <input type="button" id="addrow" value="+" onclick="addrow1()">
+            <input type="button" id="removerow" value="-" onclick="removerow1()">
+          </div>
+
+          <table class="edu-main">
+            <div>
+              <tr>
+                <td colspan="3"><span id="eduerror"></span></td>
+              </tr>
+            </div>
+            <tr class="edu-tr">
+              <td>
+                <label for="board1">Course Name</label>
+                <input type="text" id="board1" name="board[]">
+              </td>
+              <td>
+                <label for="year1">Passing Year</label>
+                <input type="text" id="year1" name="year[]">
+              </td>
+              <td>
+                <label for="marks1">Percentage</label>
+                <input type="text" id="marks1" name="marks[]">
+              </td>
+            </tr>
+
+
+          </table>
+
+        </fieldset><br>
+
+        <fieldset><br>
+          <legend>
+            Work Experience
+          </legend>
+          <div>
+            <input type="button" onclick="AddWork()" value="+">
+            <input type="button" onclick="RemoveWork()" value="-">
+          </div>
+          <table class="work-main">
+
+            <tr>
+              <td colspan="4"><span id="fromerror"></span></td>
+            </tr>
+            <tr class="work-row">
+              <td>
+                <label for="companyname1">Company Name</label>
+                <input type="text" name="companyname[]" id="companyname1">
+              </td>
+              <td>
+                <label for="designation1">Designation</label>
+                <input type="text" name="designation2[]" id="designation2">
+              </td>
+              <td>
+                <label for="from1">From</label>
+                <input type="text" name="from[]" id="from1">
+              </td>
+              <td>
+                <label for="to1">To</label>
+                <input type="text" name="to[]" id="to1">
+              </td>
+            </tr>
+
+          </table>
+        </fieldset><br>
+
+
+        <fieldset>
+          <br />
+          <legend>Language Known</legend>
+          <table>
+            <tr>
+              <td>
+                <label for="hindi">Hindi</label>
+                <input type="checkbox" id="hindi" name="hindi" value="hindi" />
+              </td>
+              <td>
+                <label for="hindiread">Read</label>
+                <input type="checkbox" id="hindiread" name="hindiread" value="1" />
+              </td>
+              <td>
+                <label for="hindiwrite">Write</label>
+                <input type="checkbox" id="hindiwrite" name="hindiwrite" value="1" />
+              </td>
+              <td>
+                <label for="hindispeak">Speak</label>
+                <input type="checkbox" id="hindispeak" name="hindispeak" value="1" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="english">English</label>
+                <input type="checkbox" id="english" name="english" value="english" />
+              </td>
+              <td>
+                <label for="englishread">Read</label>
+                <input type="checkbox" id="englishread" name="englishread" value="1" />
+              </td>
+              <td>
+                <label for="englishwrite">Write</label>
+                <input type="checkbox" id="englishwrite" name="englishwrite" value="1" />
+              </td>
+              <td>
+                <label for="englishspeak">Speak</label>
+                <input type="checkbox" id="englishspeak" name="englishspeak" value="1" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="gujrati">Gujrati</label>
+                <input type="checkbox" id="gujarati" name="gujarati" value="gujarati" />
+              </td>
+              <td>
+                <label for="gujratiread">Read</label>
+                <input type="checkbox" id="gujratiread" name="gujratiread" value="1" />
+              </td>
+              <td>
+                <label for="gujratiwrite">Write</label>
+                <input type="checkbox" id="gujratiwrite" name="gujratiwrite" value="1" />
+              </td>
+              <td>
+                <label for="gujratispeak">Speak</label>
+                <input type="checkbox" id="gujratispeak" name="gujratispeak" value="1" />
+              </td>
+            </tr>
+          </table>
+        </fieldset>
+        <br />
+
+        <fieldset><br>
+          <legend>Technology Known</legend>
+          <table>
+            <tr>
+              <td>
+                <label for="php">PHP</label>
+                <input type="checkbox" id="php" name="phptech" value="phptech">
+              </td>
+              <td>
+                <label for="phpbeginer">Beginer</label>
+                <input type="radio" id="phpbeginer" name="php" value="beginer">
+              </td>
+              <td>
+                <label for="phpmidetor">Midetor</label>
+                <input type="radio" id="phpmidetor" name="php" value="midetor">
+              </td>
+              <td>
+                <label for="phpmaster">Master</label>
+                <input type="radio" name="php" id="phpmaster" value="master">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="mysql">MYSQL</label>
+                <input type="checkbox" id="mysql" name="mysqltech" value="mysqltech">
+              </td>
+              <td>
+                <label for="mysqlbeginer">Beginer</label>
+                <input type="radio" id="mysqlbeginer" name="mysql" value="beginer">
+              </td>
+              <td>
+                <label for="mysqlmidetor">Midetor</label>
+                <input type="radio" id="mysqlmidetor" name="mysql" value="midetor">
+              </td>
+              <td>
+                <label for="mysqlmaster">Master</label>
+                <input type="radio" id="mysqlmaster" name="mysql" value="master">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="laravel">LARAVEL</label>
+                <input type="checkbox" id="laravel" name="laraveltech" value="laraveltech">
+              </td>
+              <td>
+                <label for="mysqlbeginer">Beginer</label>
+                <input type="radio" id="laravelbeginer" name="laravel" value="beginer">
+              </td>
+              <td>
+                <label for="mysqlmidetor">Midetor</label>
+                <input type="radio" id="laravelmidetor" name="laravel" value="midetor">
+              </td>
+              <td>
+                <label for="mysqlmaster">Master</label>
+                <input type="radio" id="laravelmaster" name="laravel" value="master">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="oracle">ORACLE</label>
+                <input type="checkbox" id="oracle" name="oracletech" value="oracletech">
+              </td>
+              <td>
+                <label for="oraclebeginer">Beginer</label>
+                <input type="radio" id="oraclebeginer" name="oracle" value="beginer">
+              </td>
+              <td>
+                <label for="oraclemidetor">Midetor</label>
+                <input type="radio" id="oraclemidetor" name="oracle" value="midetor">
+              </td>
+              <td>
+                <label for="oraclemaster">Master</label>
+                <input type="radio" id="oraclemaster" name="oracle" value="master">
+              </td>
+            </tr>
+          </table>
+        </fieldset><br>
+
+        <fieldset><br>
+          <legend>Reference Contact</legend>
+          <div>
+            <input type="button" onclick="Addref()" value="+">
+            <input type="button" onclick="Removeref()" value="-">
+          </div>
+          <table class="ref-main">
+            <tr class="ref-row">
+              <td>
+                <label for="refname1">Name</label>
+                <input type="text" id="refname1" name="refname[]">
+              </td>
+              <td>
+                <label for="refnumber1">Phonenumber</label>
+                <input type="text" id="refnumber1" name="refnumber[]">
+              </td>
+              <td>
+                <label for="refrelation1">Relationship</label>
+                <input type="text" id="refrelation1" name="refrelation[]">
+              </td>
+            </tr>
+
+          </table>
+        </fieldset><br>
+
+        <fieldset><br>
+          <legend>Preference</legend>
+          <table>
+            <tr>
+              <td>
+                <label for="preferedlocation">Prefered Location</label>
+                <!-- <textarea name="preferedlocation" id="preferedlocation" cols="" rows="10" placeholder="item-1 item-2 item-3" class="required" ></textarea> -->
+                <select name="preferedlocation" id="preferedlocation">
+                  <option value="ahmedabad">Ahmedabad</option>
+                  <option value="gandhinagar">Gandhinagar</option>
+                  <option value="usa">USA</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="noticeperiod">Notice Period</label>
+                <input type="text" name="noticeperiod" id="noticeperiod" class="required"
+                  value="<%= data.noticeperiod%>">
+              </td>
+              <td>
+                <label for="expectedctc">Expected CTC</label>
+                <input type="text" name="expectedctc" id="expectedctc" class="required" value="<%= data.expectedctc %>">
+              </td>
+              <td>
+                <label for="currentctc">current CTC</label>
+                <input type="text" name="currentctc" id="currentctc" class="required" value="<%= data.currentctc %>">
+              </td>
+
+            </tr>
+            <tr>
+              <td>
+                <label for="department">Department</label><br>
+                <select name="department" id="department"><br>
+                  <option value="designing">Designing</option>
+                  <option value="marketing">Marketing</option>
+                  <option value="development">Development</option>
+                </select><br>
+              </td>
+            </tr>
+          </table>
+        </fieldset>
+        <input type="submit" name="submit" id="submit" value="Submit Form" />
+      </form>
+    </div>
+  </div>
+
+
+  <script>
+    function validForm() {
+      let isValid = true;
+
+
+      Remerror();
+
+      var require_field = document.getElementsByClassName("required");
+      // console.log(require_field[0].parentNode);
+      for (const i of require_field) {
+        if (i.value === "") {
+          i.parentNode.innerHTML += `<span class="dynamic" > Required</span>`;
+          isValid = false;
+        }
+      }
+
+      // console.log('hello jeel');
+      var phoneno = /^\d{10}$/;
+      const regEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      var namereg = /^[a-zA-Z\s]*$/;
+      var datereg = /^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/;
+      let phoneValidate = document.forms["myform"]["phonenumber"].value;
+      let phonerefValidate = document.forms["myform"]["refnumber1"].value;
+
+      let emailValidate = document.forms["myform"]["email"].value;
+      let zipcodevalid = document.forms["myform"]["zipcode"].value;
+      let birthvalid = document.forms["myform"]["dateofbirth"].value;
+
+
+      var isChecked = document.querySelectorAll('input[name=gender]:checked');
+      let hindivalid = document.getElementById("hindi");
+      let hindireadvalid = document.getElementById("hindiread");
+      let hindiwritevalid = document.getElementById("hindiwrite");
+      let hindispeakvalid = document.getElementById("hindispeak");
+      let englishvalid = document.getElementById("english");
+      let englishreadvalid = document.getElementById("englishread");
+      let englishwritevalid = document.getElementById("englishwrite");
+      let englishspeakvalid = document.getElementById("englishspeak");
+      let gujrativalid = document.getElementById("gujarati");
+      let gujratireadvalid = document.getElementById("gujratiread");
+      let gujratiwritevalid = document.getElementById("gujratiwrite");
+      let gujratispeakvalid = document.getElementById("gujratispeak");
+      let phpvalid = document.getElementById("php");
+      let phpbeginervalid = document.getElementById("phpbeginer");
+      let phpmidetorvalid = document.getElementById("phpmidetor");
+      let phpmastervalid = document.getElementById("phpmaster");
+      let mysqlvalid = document.getElementById("mysql");
+      let mysqlbeginervalid = document.getElementById("mysqlbeginer");
+      let mysqlmidetorvalid = document.getElementById("mysqlmidetor");
+      let mysqlmastervalid = document.getElementById("mysqlmaster");
+      let laravelvalid = document.getElementById("laravel");
+      let laravelbeginervalid = document.getElementById("laravelbeginer");
+      let laravelmidetorvalid = document.getElementById("laravelmidetor");
+      let laravelmastervalid = document.getElementById("laravelmaster");
+      let oraclevalid = document.getElementById("oracle");
+      let oraclebeginervalid = document.getElementById("oraclebeginer");
+      let oraclemidetorvalid = document.getElementById("oraclemidetor");
+      let oraclemastervalid = document.getElementById("oraclemaster");
+      let marks1valid = document.getElementById("marks1");
+
+      //  let companyname1 = document.getElementById("companyname1");
+
+      let fromvalid = document.getElementById("from1").value;
+      let tovalid = document.getElementById("to1").value;
+      let passyearvalid = document.getElementById("year1").value;
+
+      console.log(fromvalid);
+      console.log(tovalid);
+      if (isNaN(marks1valid.value) || (marks1valid.value < 0 || marks1valid.value > 100)) {
+        var elem = document.getElementById("marks1");
+        elem.parentNode.innerHTML += `<span class="dynamic" >please enter a valid percentage</span>`;
+        isValid = false;
+      }
+
+
+
+      if (phpvalid.checked) {
+        if (!(phpbeginervalid.checked || phpmidetorvalid.checked || phpmastervalid.checked)) {
+          var elem = document.getElementById("php");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
+          isValid = false;
+        }
+      }
+
+      if (!phpvalid.checked) {
+        if ((phpbeginervalid.checked || phpmidetorvalid.checked || phpmastervalid.checked)) {
+          var elem = document.getElementById("php");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any technology</span>`;
+          isValid = false;
+        }
+      }
+
+
+      if (mysqlvalid.checked) {
+        if (!(mysqlbeginervalid.checked || mysqlmidetorvalid.checked || mysqlmastervalid.checked)) {
+          var elem = document.getElementById("mysql");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
+          isValid = false;
+        }
+      }
+      if (!mysqlvalid.checked) {
+        if ((mysqlbeginervalid.checked || mysqlmidetorvalid.checked || mysqlmastervalid.checked)) {
+          var elem = document.getElementById("mysql");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any technology</span>`;
+          isValid = false;
+        }
+      }
+
+      if (laravelvalid.checked) {
+        if (!(laravelbeginervalid.checked || laravelmidetorvalid.checked || laravelmastervalid.checked)) {
+          var elem = document.getElementById("laravel");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
+          isValid = false;
+        }
+      }
+      if (!laravelvalid.checked) {
+        if ((laravelbeginervalid.checked || laravelmidetorvalid.checked || laravelmastervalid.checked)) {
+          var elem = document.getElementById("laravel");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any technology</span>`;
+          isValid = false;
+        }
+      }
+      if (oraclevalid.checked) {
+        if (!(oraclebeginervalid.checked || oraclemidetorvalid.checked || oraclemastervalid.checked)) {
+          var elem = document.getElementById("oracle");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
+          isValid = false;
+        }
+      }
+      if (!oraclevalid.checked) {
+        if ((oraclebeginervalid.checked || oraclemidetorvalid.checked || oraclemastervalid.checked)) {
+          var elem = document.getElementById("oracle");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any technology</span>`;
+          isValid = false;
+        }
+      }
+      if (hindivalid.checked) {
+        if (
+          !(
+            hindireadvalid.checked ||
+            hindiwritevalid.checked ||
+            hindispeakvalid.checked
+          )
+        ) {
+          console.log("inside if");
+          var elem = document.getElementById("hindi");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
+          isValid = false;
+        }
+      }
+      if (!hindivalid.checked) {
+        if (
+          hindireadvalid.checked ||
+          hindiwritevalid.checked ||
+          hindispeakvalid.checked
+        ) {
+          console.log("inside if");
+          var elem = document.getElementById("hindi");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any language</span>`;
+          isValid = false;
+        }
+      }
+      if (englishvalid.checked) {
+        if (
+          !(
+            englishreadvalid.checked ||
+            englishwritevalid.checked ||
+            englishspeakvalid.checked
+          )
+        ) {
+          console.log("inside if");
+          var elem = document.getElementById("english");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
+          isValid = false;
+        }
+      }
+      if (!englishvalid.checked) {
+        if (
+          englishreadvalid.checked ||
+          englishwritevalid.checked ||
+          englishspeakvalid.checked
+        ) {
+          console.log("inside if");
+          var elem = document.getElementById("english");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any language</span>`;
+          isValid = false;
+        }
+      }
+
+      if (gujrativalid.checked) {
+        if (
+          !(
+            gujratireadvalid.checked ||
+            gujratiwritevalid.checked ||
+            gujratispeakvalid.checked
+          )
+        ) {
+          console.log("inside if");
+          var elem = document.getElementById("gujrati");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
+          isValid = false;
+        }
+      }
+      if (!gujrativalid.checked) {
+        if (
+          gujratireadvalid.checked ||
+          gujratiwritevalid.checked ||
+          gujratispeakvalid.checked
+        ) {
+          console.log("inside if");
+          var elem = document.getElementById("gujrati");
+          elem.parentNode.innerHTML += `<span class="dynamic" >please select any language</span>`;
+          isValid = false;
+        }
+      }
+      if (!isChecked.length) {
+        var elem = document.getElementById("gender");
+        elem.parentNode.innerHTML += `<span class="dynamic" > this field can't be empty</span>`;
+        isValid = false;
+      }
+      if (!(phoneValidate.match(phoneno))) {
+        // document.getElementById("validphonenumber").innerHTML = ("enter valid phonenumber!");
+        var elem = document.getElementById("phonenumber");
+        elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid mobileno </span>`;
+        isValid = false;
+      }
+      if ((!phonerefValidate.match(phoneno) && phonerefValidate.length > 0)) {
+        // document.getElementById("validphonenumber").innerHTML = ("enter valid phonenumber!");
+        var elem = document.getElementById("refnumber1");
+        elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid mobileno </span>`;
+        isValid = false;
+      }
+
+      if (!emailValidate.match(regEmail)) {
+        var elem = document.getElementById("email");
+        elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid email</span>`;
+
+        isValid = false;
+      }
+      if (!birthvalid.match(datereg)) {
+        var elem = document.getElementById("dateofbirth");
+        elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid date</span>`;
+        isValid = false;
+      }
+      if (!fromvalid.match(datereg)) {
+        var elem = document.getElementById("fromerror");
+        elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid date</span>`;
+        isValid = false;
+      }
+      if (!tovalid.match(datereg)) {
+        var elem = document.getElementById("fromerror");
+        elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid date</span>`;
+        isValid = false;
+      }
+      // if (!passyearvalid.match(datereg)) {
+      //   var elem = document.getElementById("eduerror");
+      //   elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid date</span>`;
+      //   isValid = false;
+      // }
+
+
+
+
+
+
+
+      validateName("lastname")
+
+      if (!validateName("firstname")) {
+        isValid = false;
+      }
+      if (!validateName("designation1")) {
+        isValid = false;
+      }
+      if (!validateName("city")) {
+        isValid = false;
+      }
+      if (!validateName("board1")) {
+        isValid = false;
+      }
+      if (!validateName("companyname1")) {
+        console.log('invalid company')
+        isValid = false;
+      }
+
+      if (!validateName("refname1")) {
+        isValid = false;
+      }
+
+      if (!(zipcodevalid.length == 6)) {
+        var elem = document.getElementById("zipcode");
+        elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid zipcode</span>`;
+        isValid = false;
+      }
+
+
+      console.log(isValid);
+
+      return isValid;
+
+    }
+
+    const validateName = (inputname) => {
+
+      let inputfield = document.getElementById(inputname).value;
+      console.log(inputfield);
+      let nameregex = /^[a-zA-Z\s]*$/;
+      if (!nameregex.test(inputfield)) {
+        var elem = document.getElementById(inputname);
+        elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid input</span>`
+        console.log('inside validate false');
+        return isValid = false;
+      }
+      console.log('inside validate true')
+      return isValid = true;
+
+
+    }
+
+    function addrow1() {
+      let main_work = document.getElementsByClassName("edu-main")[0];
+      let main_row = document.getElementsByClassName("edu-tr")[0];
+      console.log(main_row);
+      console.log(main_work);
+      let column = main_row.cloneNode(true);
+      main_work.appendChild(column);
+    }
+
+    function removerow1() {
+      let main_work = document.getElementsByClassName("edu-main")[0];
+      let rows = document.querySelectorAll(".edu-tr").length;
+
+      if (rows > 1) {
+        main_work.removeChild(main_work.lastElementChild);
+      }
+    }
+
+    function AddWork() {
+      let exper_work = document.getElementsByClassName("work-main")[0];
+      let work_row = document.getElementsByClassName("work-row")[0];
+      let column = work_row.cloneNode(true);
+      exper_work.appendChild(column);
+    }
+    function RemoveWork() {
+      let exper_work = document.getElementsByClassName("work-main")[0];
+      let rows = document.querySelectorAll(".work-row").length;
+      if (rows > 1) {
+        exper_work.removeChild(exper_work.lastElementChild);
+      }
+    }
+
+    function Addref() {
+      let ref_main = document.getElementsByClassName("ref-main")[0];
+      let ref_row = document.getElementsByClassName("ref-row")[0];
+      let column = ref_row.cloneNode(true);
+      ref_main.appendChild(column);
+    }
+    function Removeref() {
+      let ref_main = document.getElementsByClassName("ref-main")[0];
+      let rows = document.querySelectorAll(".ref-row").length;
+      if (rows > 1) {
+        ref_main.removeChild(ref_main.lastElementChild);
+      }
+    }
+
+    function Remerror() {
+      var dynamic_class = document.querySelectorAll(".dynamic");
+      for (const i of dynamic_class) {
+        i.remove();
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>24DEV078 JEEL Patel</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+
+
+            <% for (let i=0; i < data.length; i++) { %>
+                <tr>
+                    <td>
+                        <%= data[i].employee_id %>
+                    </td>
+                    <td>
+                        <%=data[i].first_name %>
+                    </td>
+                    <td>
+                        <%=data[i].last_name %>
+                    </td>
+                    <td>
+                        <a href="/Dashboard/upsave?id=<%= data[i].employee_id %>">Update Here</a>
+                    </td>
+                </tr>
+
+
+                <% } %>
+        </table>
+    </div>
+</body>
+
+</html>
