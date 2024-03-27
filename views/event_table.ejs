@@ -1,0 +1,301 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Events</title>
+    <style>
+        td{
+            border: 5px solid black;
+            height: 100px;
+            width: 100px;
+            color:chocolate;
+        }
+
+        p{
+            width: 100px;
+            height: 100px;
+            overflow: scroll;
+        }
+        table
+        {
+         
+    border-collapse:separate;
+    border-spacing:10px 10px;
+        }
+        h1{
+            color: blue;
+            font-family: sans-serif;
+            position: relative;
+        }
+        .eventcell{
+            color: gray;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>HTML EVENTS ASSIGNMENT</h1>
+    <table>
+        <tr>
+            <td >
+                <label for="onclick">OnClick</label>
+            </td>
+            <td class="eventcell">
+                <input type="button" name="onclick" id="onclick" onclick="alert('OnClick Event occured')">
+            </td>
+            <td>
+                <label for="ondoubleclick">Ondoubleclick</label>
+            </td>
+            <td class="eventcell">
+                <input type="button" name="ondoubleclick" ondblclick="doubleclick()">
+            </td>
+            <td>
+                <label for="oncontaxtmenu">oncontaxtmenu(Right click on this)</label>
+            </td>
+            <td class="eventcell">
+                <input type="button" name="oncontaxtmenu" id="oncontaxtmenu" oncontextmenu="oncontaxtmenu()">
+            </td>
+        </tr><br>
+
+       <br> <tr>
+            <td>
+                <label for="onerror">Onerror</label>
+            </td>
+            <td class="eventcell">
+                <img src="jeel.jpg" id="onerror" name="onerror" onerror="fu()">
+            </td>
+            <td>
+                <label for="onfocus">Onfocus(type any thing !)</label>
+            </td>
+            <td class="eventcell">
+                <input type="text" onfocus="eventno7()" id="onfocus" name="onfocus">
+            </td>
+            <td>
+                <label for="onkeypress">OnkeyPress(press any key inside texbox)</label>
+            </td>
+            <td class="eventcell">
+                <input type="text" onkeypress="eventno8()" id="onkeypress" name="onkeypress">
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label for="onblur">Onblur</label>
+            </td>
+            <td class="eventcell">
+                <input type="text" onblur="onblur()" id="blurtext" name="blurtext">
+            </td>
+            <td>
+                <label for="onchange">Onchange</label>
+            </td>
+            <td class="eventcell">
+                <input type="text" name="onchange" id="onchange" value="Jeel" onchange="onchangefunc(this.value)" ><br><br>
+            </td>
+            <td>
+                <label for="onmousedown">Onmousedown</label>
+            </td>
+            <td class="eventcell">
+                <p id="onmousedown" name="onmousedown" onmousedown="eventno9()"> click Here to see the magic !</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="oninvalid">Oninvalid</label>
+            </td>
+            <td class="eventcell">
+                <form action="/action_page.php" method="get">
+                 <input type="text" oninvalid="alert('You must fill out the form!');" name="fname" required>
+                    <input type="submit" value="Submit">
+                  </form>
+            </td>
+            <td>
+                <label for="onsumit">Onsubmit</label>
+            </td>
+            <td class="eventcell">
+            <form action="#" onsubmit="alert('form has been submitted')">
+                Enter name: <input type="text" name="fname">
+                <input type="submit" value="Submit">
+              </form>
+            </td>
+            <td>
+                <label for="onselect">Onselect(select some text)</label>
+            </td>
+            <td class="eventcell">
+                <input type="text" name="onselect" id="onselect" value="Jeel Patel" onselect="eventno10()">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="onscroll">Onscroll</label>
+            </td>
+            <td class="eventcell">
+                <p id="onscroll" name="onscroll" onscroll="alert('you are scrolling')">Hey I am jeel patel Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequatur distinctio minus aliquam iusto eius dolore modi odio! Minus consectetur, molestiae quisquam, magnam voluptate error aperiam officiis explicabo qui quidem fugiat!
+</p>
+            </td>
+            <td>
+                <label for="ondrag">Ondrag</label>
+            </td>
+            <td class="eventcell">
+                <b draggable="true" ondrag="alert('you are dragging')">drag me</b>
+            </td>
+            <td>
+                <label for="ontoggle">ontoggle</label>
+            </td>
+            <td class="eventcell">
+                 <details id="ontoggle" name="ontoggle" ontoggle="alert('ontoggle event occured')"></details>
+            </td>
+        </tr>
+        <tr>
+           <td>
+            <label for="oninput">OnInput(enter something)</label>
+           </td>
+           <td class="eventcell">
+            <input type="text" id="oninput" name="oninput" oninput="eventno11()">
+           </td>
+           <td>
+            <label for="onreset">Onreset</label>
+           </td>
+           <td class="eventcell">
+            <form onreset="eventno12()">
+                Enter name: <input type="text">
+                <input type="reset">
+              </form>
+              
+           </td>
+           <td>
+            <label for="onmouseenter">Onmouseenter</label>
+           </td>
+           <td class="eventcell">
+            <p  id="onmouseenter" name="onmouseenter"  onmouseenter="eventno13()">come here!</p>
+           </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="onmousleave">Onmouseleave</label>
+               </td>
+               <td class="eventcell">
+                <p  id="onmouseenter" name="onmouseenter"  onmouseleave="eventno14()">see you soon </p>
+               </td>
+            <td>
+                <label for="onmouseup">Onmouseup</label>
+            </td>
+            <td class="eventcell">
+                <p id="onmouseup" name="onmouseup" onmouseup="eventno15()">Hey I am Jeel patel</p>
+            </td>
+            <td>
+                <label for="onmousemove">Onmousemove</label>
+            </td>
+            <td class="eventcell">
+                <p id="onmousemove" name="onmousemove" onmousemove="eventno16()">
+                    move your curser here !
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="oncopy">Oncopy</label>
+            </td>
+            <td class="eventcell">
+                <input type="text" name="oncopy" id="oncopy" oncopy="eventno17()" value="dont copy me !">
+            </td>
+            <td>
+                <label for="oncut">oncut</label>
+            </td>
+            <td class="eventcell">
+                <input type="text" name="oncut" id="oncut" oncut="eventno18()" value="Hey cut me out !">
+            </td>
+            <td>
+                <label for="resize">Resize</label>
+            </td>
+            <td class="eventcell">
+                <p id="resize" name="resize" onresize="eventno19()">try to resize the window !</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="onload">OnLoad</label>
+            </td>
+            <td class="eventcell">
+                <p id="onload" name="onload" onload="eventno20()">on load event is here !</p>
+            </td>
+            <td>
+                <label for="ononline">Ononline</label>
+            </td>
+            <td>
+                <button id="ononline" name="ononline" ononline="eventno21()"></button>
+            </td>
+        </tr>
+    </table>
+
+<script >
+  function doubleclick() {
+    alert('doubleclick event occured')
+  }
+  function oncontaxtmenu(){
+    alert('oncontextmenu event occured')
+  }
+
+  document.getElementById("blurtext").addEventListener("blur", onblur);
+  function onblur(){
+   alert('input field lost focus')
+  }
+
+  function onchangefunc(val){
+    alert('value has been changed' + val)
+  }
+  
+  function fu(){
+    alert('this image could not be load')
+  }
+
+  function eventno7(){
+    document.getElementById("onfocus").style.backgroundColor="blue";
+  }
+
+  function eventno8(){
+    document.getElementById("onkeypress").style.backgroundColor="red";
+  }
+
+  function eventno9(){
+    document.getElementById("onmousedown").style.color="red";
+  }
+  function eventno10(){
+    alert('you have selected some text');
+  }
+  function eventno11(){
+    alert('oninput event occured')
+  }
+function eventno12(){
+    alert('onreset event occured')
+}
+function eventno13(){
+    alert('onmouseenter event occured')
+}
+function eventno14(){
+    alert('onmouseleave event occured')
+}
+function eventno15(){
+    alert('onmouseup event occured')
+}
+
+function eventno16(){
+    alert('onmousemove event occured')
+}
+function eventno17(){
+    alert('oncopy event occured')
+}
+function eventno18(){
+    alert('oncut event occured')
+}
+function eventno19(){
+    alert('onresize window occured')
+}
+function eventno20(){
+    alert('onload event occured')
+}
+function eventno21(){
+    alert('ononline event occured')
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <title>more details</title>
+  <style>
+    table {
+      width: 90%;
+    }
+
+    tr {
+      border: 1px solid black;
+    }
+
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    th {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    body {
+      background-color: #f9f7ee;
+    }
+
+    .pagging-component {
+      font-size: 30px;
+      display: flex;
+      width: 70%;
+    }
+
+    i {
+      width: 30px;
+      height: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>24DEV078 JEEL PATEL</h1>
+  <form action="/Dashboard/orderby?p=1" method="get">
+    <select name="order" id="order">select order
+      <option value="asc">Ascending</option>
+      <option value="desc">Desending</option>
+    </select>
+
+    <select name="column" id="column">
+      <option value="firstname">Firstname</option>
+      <option value="student_id">Studentid</option>
+    </select>
+    <input type="submit">
+  </form>
+
+  <div class="pagging-component">
+    <% if(l>1){ %>
+      <a class="fa-solid fa-angles-left" class="left-arrow"
+        href="/Dashboard/orderby?p=1&order=<%= order %>&column=<%= column %>"></a>
+      <% } %>
+        <% if(l>1){ %>
+          <a class="fa-solid fa-angle-left left-arrow"
+            href="/Dashboard/orderby?p=<%= Number(l)-1 %>&order=<%= order %>&column=<%= column %>"></a>
+          <% } %>
+            <div>
+              <%=l%>
+            </div>
+
+            <% if(l>=1 && l<10){ %>
+                <a class="fa-solid fa-angle-right"
+                  href="/Dashboard/orderby?p=<%= Number(l)+1 %>&order=<%= order %>&column=<%= column %>"></a>
+                <% } %>
+                  <% if(l>=1 && l<10){ %>
+                      </10>
+                      <a class="fa-solid fa-angles-right"
+                        href="/Dashboard/orderby?p=250&order=<%= order %>&column=<%= column %>"></a>
+                      <% } %>
+  </div>
+
+
+
+  </div>
+
+  <table>
+    <tr>
+
+      <th>ID</th>
+      <th>firstname</th>
+      <th>lastname</th>
+      <th>email</th>
+      <th>email2</th>
+      <th>profession</th>
+      <th>city</th>
+      <th>dataofbirth</th>
+      <th>country</th>
+      <th>gender</th>
+      <th>create_date</th>
+    </tr>
+    <% for( let i=0;i < data.length ; i++ ) { %>
+      <tr>
+        <td>
+          <%= data[i].student_id %>
+        </td>
+        <td>
+          <%= data[i].firstname %>
+        </td>
+        <td>
+          <%= data[i].lastname %>
+        </td>
+        <td>
+          <%= data[i].email %>
+        </td>
+        <td>
+          <%= data[i].email2 %>
+        </td>
+        <td>
+          <%= data[i].profession %>
+        </td>
+        <td>
+          <%= data[i].city %>
+        </td>
+        <td>
+          <%= data[i].dateofbirth %>
+        </td>
+        <td>
+          <%= data[i].country %>
+        </td>
+        <td>
+          <%= data[i].xender %>
+        </td>
+        <td>
+          <%= data[i].create_date %>
+        </td>
+      </tr>
+
+      <% } %>
+  </table>
+
+</body>
+
+</html>

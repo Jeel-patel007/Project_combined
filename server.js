@@ -263,12 +263,83 @@ app.get("/Dashboard/kukucube", (req, res) => {
 
 app.get("/Dashboard/tiktactoe", (req, res) => {
     try {
-        res.render("tictak")
+        res.render("tictak");
     }
     catch (err) {
         console.log(err);
     }
 });
+
+app.get("/Dashboard/eventtable", (req, res) => {
+    try {
+        res.render("event_table")
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
+app.get("/Dashboard/listdatabase", function (req, res) {
+    const total_page = 50000;
+    const perPage = 200;
+    const pageCount = Math.ceil(total_page / perPage);
+    //   let page = 1;
+    let page = parseInt(req.query.p);
+    let order = req.query.order;
+    //   console.log(page);
+    //   console.log(page);
+    if (pageCount < 1) {
+        pageCount = 1;
+    }
+    if (isNaN(page)) {
+        page = 1;
+        // console.log("inside if");
+    }
+
+    let offset = (page - 1) * 200;
+
+    let query = `select * from student_master1 limit 200 offset ${offset}`;
+
+    connection.query(query, function (err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("data selected");
+        }
+        // console.log(result);
+
+        res.render("listtask", { data: result, currpage: page });
+    });
+});
+
+app.get("/Dashboard/orderby", function (req, res) {
+    let l = req.query.p;
+
+    if (l < 1 || isNaN(l)) {
+        l = 1;
+    }
+    if (l > 250) {
+        l = 250;
+    }
+
+    let order = req.query.order || "asc";
+    let column = req.query.column || "student_id";
+    let offset = (Number(l) - 1) * 200;
+
+    let query = `select * from student_master1 order by  ${column}  ${order} limit 200 offset ${offset}`;
+    connection.query(query, function (err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("data selected");
+        }
+
+        // console.log(result);
+
+        res.render("orderby", { data: result, l, order, column });
+    });
+});
+
 
 function ExecuteData(query) {
     return new Promise((resolve, reject) => {
