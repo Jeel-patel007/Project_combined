@@ -1,0 +1,81 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .pagging-component {
+        display: flex;
+        font-size: 30px;
+        justify-content: space-between;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+      }
+      td {
+        border: 1px solid black;
+
+        background-color: cadetblue;
+      }
+      th {
+        border: 1px solid black;
+        background-color: crimson;
+      }
+      .table {
+        width: 80%;
+        margin: 0 auto;
+      }
+      .atten{
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>24DEV078 JEEL PATEL</h1>
+    <h2>Detail report of Student</h2>
+    <label for="studentname">Student name</label>
+    <div><%= data[0].firstname %></div>
+    <label for="studentname">Student ID</label>
+    <div><%= data[0].id %></div>
+    <table>
+      <tr>
+        <th rowspan="2">Subject Name</th>
+        <th colspan="2">Terminal</th>
+        <th colspan="2">Prelim</th>
+        <th colspan="2">Final</th>
+        <th rowspan="2">Total marks</th>
+       
+      </tr>
+
+      <tr>
+        <th>Theorymarks</th>
+        <th>Practicalmarks</th>
+        <th>Theorymarks</th>
+        <th>Practicalmarks</th>
+        <th>Theorymarks</th>
+        <th>Practicalmarks</th>
+      </tr>
+      <% for(let i=0 ; i< data.length;i +=3) { %>
+      <tr>
+        <td><%= data[i].sub_name %></td>
+     
+      <% for(let j=i; j<i+3;j++) { %>
+
+        <td><%= data[j].obtain_theorymarks %></td>
+        <td><%= data[j].obtain_practicalmarks %></td>
+        <% } %>
+       <td><%= data[i].obtain_theorymarks+data[i].obtain_practicalmarks+data[i+1].obtain_theorymarks+data[i+1].obtain_practicalmarks + data[i+2].obtain_theorymarks+data[i+2].obtain_practicalmarks%></td>
+    </tr>
+      <% } %>
+     
+    </table>
+<div class="atten">
+    <label for="Attendence">Attendence</label>
+    <div > <strong><%= atten[0].atten %></strong></div>
+</div>
+<a href="/result">Go Back</a>
+   
+  </body>
+</html>
