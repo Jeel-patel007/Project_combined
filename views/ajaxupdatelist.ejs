@@ -1,0 +1,44 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update list</title>
+</head>
+
+<body>
+    <div class="container">
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th>Update </th>
+            </thead>
+            <tbody>
+
+
+
+                <% for (let i=0; i < data.length; i++) { %>
+                    <tr>
+                        <td>
+                            <%= data[i].employee_id %>
+                        </td>
+                        <td>
+                            <%= data[i].first_name %>
+                        </td>
+                        <td>
+                            <%= data[i].last_name %>
+                        </td>
+                        <td>
+                            <a href="/ajaxupdatedata?id=<%= data[i].employee_id %>">update data here</a>
+                        </td>
+                    </tr>
+                    <% } %>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

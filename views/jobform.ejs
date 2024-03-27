@@ -1,0 +1,649 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Form</title>
+
+    <link rel="stylesheet" href="ajaxform.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>24DEV078 JEEL PATEL </h1>
+        <h2>Job Application Form</h2>
+        <form method="post" id="refForm">
+            <table id="header">
+                <tr>
+                    <th class="step">Basic Details</th>
+                    <th class="step">Education</th>
+                    <th class="step">Work Experience</th>
+                    <th class="step">Language Known</th>
+                    <th class="step">technology known</th>
+                    <th class="step">Reference Contact</th>
+                    <th class="step">Preference</th>
+                </tr>
+            </table>
+            <div class="tab">
+                <input type="hidden" id="empid" name="empid" value="<%= data[0].employee_id  %>">
+                <table class="basic">
+
+                    <tr>
+                        <td>
+                            <label for="firstname">First Name </label>
+                            <input type="text" id="firstname" name="firstname" class="required1"
+                                value="<%= data[0].first_name %>">
+
+                        </td>
+                        <td>
+                            <label for="lastname">Last Name</label>
+                            <input type="text" id="lastname" name="lastname" class="required1"
+                                value="<%= data[0].last_name %>">
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label for="designation">Designation</label>
+                            <input type="text" id="designation1" name="designation1" class="required1"
+                                value="<%= data[0].designation %>">
+
+                        </td>
+                        <td>
+                            <label for="email">Email</label>
+                            <input type="text" name="email" id="email" class="required1" value="<%= data[0].email %>">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="address1">Address-1</label>
+                            <input type="text" name="address1" id="address1" class="required1"
+                                value="<%= data[0].address1 %>">
+
+                        </td>
+                        <td>
+                            <label for="address2">Address-2</label>
+                            <input type="text" name="address2" id="address2" class="required1"
+                                value="<%= data[0].address2 %>">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="phonenumber">Phone Number</label>
+                            <input type="text" name="phonenumber" id="phonenumber" class="required1"
+                                value="<%= data[0].phonenumber %>">
+
+                        </td>
+                        <td>
+                            <label for="city">City</label>
+                            <input type="text" name="city" id="city" class="required1" value="<%= data[0].city %>">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="state">State</label>
+                            <select name="state" id="state" class="required1">
+                                <option value="Gujrat">Gujrat</option>
+                                <option value="UttarPradesh">UttarPradesh</option>
+                                <option value="Rajastan">Rajastan</option>
+                                <option value="MadhyaPradesh">MadhyaPradesh</option>
+                            </select>
+
+                        </td>
+                        <td>
+                            <label for="zipcode">Zipcode</label>
+                            <input type="text" name="zipcode" id="zipcode" class="required1"
+                                value="<%= data[0].zipcode %>">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+
+                            <div id="gender">
+                                <label for="gender">gender:</label>
+                                <input type="radio" id="male" name="gender" value="male" <% if(data[0].xender==='male'
+                                    ){ %>
+                                checked
+                                <% } %> >
+                                    <label for="male">male</label>
+                                    <input type="radio" id="female" name="gender" value="female" <%
+                                        if(data[0].xender==='female' ){ %>
+                                    checked
+                                    <% } %> >
+                                        <label for="female">female</label>
+
+                            </div>
+
+                        </td>
+                        <td>
+                            <label for="dateofbirth">Date Of Birth</label>
+                            <input type="text" id="dateofbirth" name="dateofbirth" placeholder="yyyy-mm-dd"
+                                class="required" value="<%= data[0].dateofbirth %>">
+
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="rstatus">Relationship Status</label>
+                            <select name="rstatus" id="rstatus" class="required">
+                                <option value="single">single</option>
+                                <option value="married">married</option>
+
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="tab">
+                <table id="edu_table_error">
+
+                    <div>
+                        <input type="button" id="addrow" value="+" onclick="addrow1()">
+                        <input type="button" id="removerow" value="-" onclick="removerow1()">
+                    </div>
+                    <tbody class="edu-main">
+
+                        <% if(data2.length> 0 ) {%>
+                            <% for (let i=0; i < data2.length; i++) { %>
+                                <tr class="edu-tr">
+                                    <input type="text" id="eduid" name="eduid[]" value="<%=data2[i].edu_id %>" hidden>
+                                    <td>
+                                        <label for="board1">Course Name</label>
+                                        <input type="text" id="board1" name="board[]" value="<%=data2[i].coursename%>"
+                                            class="required3">
+                                    </td>
+                                    <td>
+                                        <label for="year1">Passing Year</label>
+                                        <input type="text" id="year1" name="year[]" value="<%=data2[i].yearofpassing%>"
+                                            class="required3">
+                                    </td>
+                                    <td>
+                                        <label for="marks1">Percentage</label>
+                                        <input type="text" id="marks1" name="marks[]" value="<%=data2[i].percentage%>"
+                                            class="required3">
+                                    </td>
+                                </tr>
+                                <% }%>
+                                    <% }%>
+
+                                        <% if(data2.length==0 ) {%>
+                                            <tr class="edu-tr">
+                                                <input type="text" id="eduid" name="eduid[]" hidden>
+                                                <td>
+                                                    <label for="board1">Course Name</label>
+                                                    <input type="text" id="board1" name="board[]">
+                                                </td>
+                                                <td>
+                                                    <label for="year1">Passing Year</label>
+                                                    <input type="text" id="year1" name="year[]">
+                                                </td>
+                                                <td>
+                                                    <label for="marks1">Percentage</label>
+                                                    <input type="text" id="marks1" name="marks[]">
+                                                </td>
+                                            </tr>
+                                            <% }%>
+
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="tab">
+                <table id="work_error">
+                    <div>
+                        <input type="button" onclick="AddWork()" value="+">
+                        <input type="button" onclick="RemoveWork()" value="-">
+                    </div>
+                    <tbody class="work-main">
+                        <% if(data4.length==0 ) {%>
+                            <input type="text" id="workid" name="workid[]" hidden>
+                            <tr class="work-row1">
+                                <td>
+                                    <label for="companyname1">Company Name</label>
+                                    <input type="text" name="companyname[]" id="companyname1">
+                                </td>
+                                <td>
+                                    <label for="designation1">Designation</label>
+                                    <input type="text" name="designation2[]" id="designation1">
+                                </td>
+                                <td>
+                                    <label for="from1">From</label>
+                                    <input type="text" name="from[]" id="from1">
+                                </td>
+                                <td>
+                                    <label for="to1">To</label>
+                                    <input type="text" name="to[]" id="to1">
+                                </td>
+                            </tr>
+
+                            <% }%>
+                                <% if(data4.length> 0 ) {%>
+
+                                    <% for (let i=0; i < data4.length; i++) { %>
+                                        <input type="text" id="workid" name="workid[]" value="<%=data4[i].exper_id %>"
+                                            hidden>
+                                        <tr class="work-row1">
+
+
+                                            <td>
+                                                <label for="companyname1">Company Name</label>
+                                                <input type="text" name="companyname[]" id="companyname1"
+                                                    value="<%=data4[i].companyname%>">
+                                            </td>
+                                            <td>
+                                                <label for="designation1">Designation</label>
+                                                <input type="text" name="designation2[]" id="designation2"
+                                                    value="<%=data4[i].designation%>">
+                                            </td>
+                                            <td>
+                                                <label for="from1">From</label>
+                                                <input type="text" name="from[]" id="from1"
+                                                    value="<%=data4[i].startdate%>">
+                                            </td>
+                                            <td>
+                                                <label for="to1">To</label>
+                                                <input type="text" name="to[]" id="to1" value="<%=data4[i].enddate%>">
+                                            </td>
+                                        </tr>
+                                        <% }%>
+                                            <% }%>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="hindi">Hindi</label>
+                            <input type="checkbox" id="hindi" name="hindi" value="hindi" <% data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='hindi' ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                        <td>
+                            <label for="hindiread">Read</label>
+                            <input type="checkbox" id="hindiread" name="hindiread" value="1" <% data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='hindi'&& element.canread==1 ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                        <td>
+                            <label for="hindiwrite">Write</label>
+                            <input type="checkbox" id="hindiwrite" name="hindiwrite" value="1" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='hindi'&& element.canwrite==1 ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                        <td>
+                            <label for="hindispeak">Speak</label>
+                            <input type="checkbox" id="hindispeak" name="hindispeak" value="1" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='hindi'&& element.speak==1 ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="english">English</label>
+                            <input type="checkbox" id="english" name="english" value="english" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='english' ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                        <td>
+                            <label for="englishread">Read</label>
+                            <input type="checkbox" id="englishread" name="englishread" value="1" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='english'&& element.canread==1 ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                        <td>
+                            <label for="englishwrite">Write</label>
+                            <input type="checkbox" id="englishwrite" name="englishwrite" value="1" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='english'&& element.canwrite==1 ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                        <td>
+                            <label for="englishspeak">Speak</label>
+                            <input type="checkbox" id="englishspeak" name="englishspeak" value="1" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='english'&& element.canspeak==1 ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="gujrati">Gujrati</label>
+                            <input type="checkbox" id="gujarati" name="gujarati" value="gujarati" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='gujarati' ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                        <td>
+                            <label for="gujratiread">Read</label>
+                            <input type="checkbox" id="gujratiread" name="gujratiread" value="1" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='gujarati'&& element.canread==1 ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                        <td>
+                            <label for="gujratiwrite">Write</label>
+                            <input type="checkbox" id="gujratiwrite" name="gujratiwrite" value="1" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='gujarati'&& element.canwrite==1 ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                        <td>
+                            <label for="gujratispeak">Speak</label>
+                            <input type="checkbox" id="gujratispeak" name="gujratispeak" value="1" <%
+                                data7.forEach(element=>
+                            { %>
+                            <%if(element.languageknown=='gujarati'&& element.speak==1 ) {%>
+                                checked
+                                <% } %>
+                                    <% });%>>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="php">PHP</label>
+                            <input type="checkbox" id="php" name="phptech" value="phptech" <%data6.forEach(element=>
+                            { %>
+                            <% if(element.technologyknown=='phptech' ){ %>
+                                checked
+                                <% } %>
+                                    <% }); %>>
+                        </td>
+                        <td>
+                            <label for="phpbeginer">Beginer</label>
+                            <input type="radio" id="phpbeginer" name="php" value="beginer" <%data6.forEach(element=>
+                            { %>
+                            <% if(element.technologyknown=='phptech' && element.level=='beginer' ){ %>
+                                checked
+                                <% } %>
+                                    <% }); %>>
+                        </td>
+                        <td>
+                            <label for="phpmidetor">Midetor</label>
+                            <input type="radio" id="phpmidetor" name="php" value="midetor" <%data6.forEach(element=>
+                            { %>
+                            <% if(element.technologyknown=='phptech' && element.level=='midetor' ){ %>
+                                checked
+                                <% } %>
+                                    <% }); %>>
+                        </td>
+                        <td>
+                            <label for="phpmaster">Master</label>
+                            <input type="radio" name="php" id="phpmaster" value="master" <%data6.forEach(element=>
+                            { %>
+                            <% if(element.technologyknown=='phptech' && element.level=='master' ){ %>
+                                checked
+                                <% } %>
+                                    <% }); %>>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="mysql">MYSQL</label>
+                            <input type="checkbox" id="mysql" name="mysqltech" value="mysqltech" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='mysqltech' ) { %> checked <% } %>
+                                    <% }) %> >
+                        </td>
+                        <td>
+                            <label for="mysqlbeginer">Beginer</label>
+                            <input type="radio" id="mysqlbeginer" name="mysql" value="beginer" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='mysqltech' && element.level==='beginer' ) { %> checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                        <td>
+                            <label for="mysqlmidetor">Midetor</label>
+                            <input type="radio" id="mysqlmidetor" name="mysql" value="midetor" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='mysqltech' && element.level==='midetor' ) { %> checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                        <td>
+                            <label for="mysqlmaster">Master</label>
+                            <input type="radio" id="mysqlmaster" name="mysql" value="master" <% data6.forEach(element=>
+                            { %>
+                            <% if(element.technologyknown==='mysqltech' && element.level==='master' ) { %> checked
+                                <% } %>
+                                    <% }) %> >
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="laravel">LARAVEL</label>
+                            <input type="checkbox" id="laravel" name="laraveltech" value="laraveltech" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='laraveltech' ) { %> checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                        <td>
+                            <label for="laravelbeginer">Beginer</label>
+                            <input type="radio" id="laravelbeginer" name="laravel" value="beginer" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='laraveltech' && element.level==='beginer' ) { %>
+                                checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                        <td>
+                            <label for="mysqlmidetor">Midetor</label>
+                            <input type="radio" id="laravelmidetor" name="laravel" value="midetor" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='laraveltech' && element.level==='midetor' ) { %>
+                                checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                        <td>
+                            <label for="mysqlmaster">Master</label>
+                            <input type="radio" id="laravelmaster" name="laravel" value="master" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='laraveltech' && element.level==='master' ) { %> checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="oracle">ORACLE</label>
+                            <input type="checkbox" id="oracle" name="oracletech" value="oracletech" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='oracletech' ) { %> checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                        <td>
+                            <label for="oraclebeginer">Beginer</label>
+                            <input type="radio" id="oraclebeginer" name="oracle" value="beginer" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='oracletech' && element.level==='beginer' ) { %> checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                        <td>
+                            <label for="oraclemidetor">Midetor</label>
+                            <input type="radio" id="oraclemidetor" name="oracle" value="midetor" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='oracletech' && element.level==='midetor' ) { %> checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                        <td>
+                            <label for="oraclemaster">Master</label>
+                            <input type="radio" id="oraclemaster" name="oracle" value="master" <%
+                                data6.forEach(element=> { %>
+                            <% if(element.technologyknown==='oracletech' && element.level==='master' ) { %> checked
+                                <% } %>
+                                    <% }) %> >
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab">
+                <div>
+                    <input type="button" onclick="Addref()" value="+">
+                    <input type="button" onclick="Removeref()" value="-">
+                </div>
+                <table id="ref_error">
+
+                    <tbody class="ref-main">
+                        <tr class="ref-row">
+                            <input type="text" id="refid" name="refid[]" hidden>
+                            <% if(data5.length==0 ) {%>
+                                <td>
+                                    <label for="refname1">Name</label>
+                                    <input type="text" id="refname1" name="refname[]">
+                                </td>
+                                <td>
+                                    <label for="refnumber1">Phonenumber</label>
+                                    <input type="text" id="refnumber1" name="refnumber[]">
+                                </td>
+                                <td>
+                                    <label for="refrelation1">Relationship</label>
+                                    <input type="text" id="refrelation1" name="refrelation[]">
+                                </td>
+                        </tr>
+
+                        <% }%>
+
+
+                            <% if(data5.length> 0) { %>
+                                <% for (let i=0; i < data5.length; i++) { %>
+                                    <tr class="ref-row">
+                                        <input type="text" id="refid" name="refid[]" value="<%=data5[i].ref_id %>"
+                                            hidden>
+                                        <td>
+                                            <label for="refname1">Name</label>
+                                            <input type="text" id="refname1" name="refname[]"
+                                                value="<%= data5[i].personname%>">
+                                        </td>
+                                        <td>
+                                            <label for="refnumber1">Phonenumber</label>
+                                            <input type="text" id="refnumber1" name="refnumber[]"
+                                                value="<%= data5[i].contactnumber%>">
+                                        </td>
+                                        <td>
+                                            <label for="refrelation1">Relationship</label>
+                                            <input type="text" id="refrelation1" name="refrelation[]"
+                                                value="<%=data5[i].relationship%>">
+                                        </td>
+                                    </tr>
+                                    <% }%>
+                                        <% }%>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="preferedlocation">Prefered Location</label>
+                            <select name="preferedlocation" id="preferedlocation">
+                                <option value="ahmedabad">Ahmedabad</option>
+                                <option value="gandhinagar">Gandhinagar</option>
+                                <option value="usa">USA</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="noticeperiod">Notice Period</label>
+                            <input type="text" name="noticeperiod" id="noticeperiod" class="required2"
+                                value="<%= data3[0].noticeperiod  %>">
+                        </td>
+                        <td>
+                            <label for="expectedctc">Expected CTC</label>
+                            <input type="text" name="expectedctc" id="expectedctc" class="required2"
+                                value="<%= data3[0].expectedctc %>">
+                        </td>
+                        <td>
+                            <label for="currentctc">current CTC</label>
+                            <input type="text" name="currentctc" id="currentctc" class="required2"
+                                value="<%= data3[0].currentctc %>">
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="department">Department</label><br>
+                            <select name="department" id="department"><br>
+                                <option value="designing">Designing</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="development">Development</option>
+                            </select><br>
+                        </td>
+                    </tr>
+
+
+                </table>
+                <input type="button" name="submit" id="submit" value="Submit Form" onclick="SubmitForm()" />
+                <input type="button" name="submit" id="update" value="Update Form" onclick="UpdateForm()" />
+            </div>
+
+        </form>
+        <div class="nav-button">
+            <input type="button" name="prevBtn" id="prevBtn" value="Previous" onclick="nextPrev(-1)">
+            <input type="button" name="nextBtn" id="nextBtn" value="Next" onclick="nextPrev(1)">
+
+
+        </div>
+
+    </div>
+    <script src="/ajax_index.js"></script>
+</body>
+
+</html>
