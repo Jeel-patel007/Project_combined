@@ -1,0 +1,36 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejs_State-City</title>
+    <script src="/city.js"></script>
+    <style>
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            border: 0.7px solid skyblue;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-family: sans-serif;
+            color: coral;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="section">
+        <div class="container">
+            <h1>24DEV078 JEEL PATEL</h1>
+            <select onchange="print_city('state', this.selectedIndex);" id="sts" name="stt" class="form-control"
+                required></select>
+            <select id="state" class="form-control" required></select>
+            <script language="javascript">print_state("sts");</script>
+        </div>
+    </div>
+</body>
+
+</html>
