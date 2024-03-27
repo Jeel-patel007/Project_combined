@@ -1,0 +1,176 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>forgot password</title>
+    <style>
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        body {
+            background-color: #F9F7EE;
+        }
+
+        h1 {
+            color: chocolate;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 25px;
+        }
+
+        h2 {
+            color: darkslategrey;
+            font-size: 15px;
+        }
+
+        table {
+            height: 250px;
+
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        input {
+            height: 35px;
+            width: 200px;
+            border-radius: 2px;
+            color: #000000;
+        }
+
+        .fourth-button {
+            margin-top: 10px;
+            width: 150px;
+            height: 50px;
+            background-color: #FFC80A;
+            border: 2px solid #000000;
+        }
+
+        .forgetform {
+            margin-left: 400px;
+        }
+
+        .pwd,
+        #reset {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>24DEV078 JEEL PATEL</h1>
+        <h2>Reset Password</h2>
+        <div class="forgetform">
+            <form id="refForm" autocomplete="off">
+                <table>
+                    <tr>
+                        <td>
+                            <span id="message"></span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" id="email" name="email" class="required" tabindex="1"
+                                placeholder="Email">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <input type="text" id="password" name="password" class="required pwd" tabindex="2"
+                                placeholder="Password">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <input type="text" id="password2" name="password2" class="required pwd" class="pwd"
+                                tabindex="3" placeholder="Password">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="enter" value="Enter" onclick="forgetFunc()" class="fourth-button">
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="reset" value="Reset" onclick="pwdFunc()" class="fourth-button">
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </form>
+        </div>
+    </div>
+    <script>
+
+        async function forgetFunc() {
+            let formData = document.getElementById("refForm");
+
+            let details = new FormData(formData);
+            const params = new URLSearchParams(details);
+            const jobdata = await new Response(params).text();
+
+
+            // console.log(typeof (result));
+
+            let data = await fetch("http://localhost:8084/forgotsave", {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                body: jobdata
+
+            })
+            console.log(data);
+
+            var result = await data.json();
+            if (data.status == 200) {
+                let pwd = document.getElementsByClassName("pwd");
+                console.log(pwd);
+                pwd[0].style.display = 'block';
+                pwd[1].style.display = 'block';
+
+                document.getElementById("enter").style.display = 'none';
+                document.getElementById("reset").style.display = 'block';
+            }
+            console.log(result);
+            document.getElementById("message").innerHTML = " ";
+            document.getElementById("message").innerHTML = result;
+
+        }
+
+        async function pwdFunc() {
+            let formData = document.getElementById("refForm");
+
+            let details = new FormData(formData);
+            const params = new URLSearchParams(details);
+            const jobdata = await new Response(params).text();
+
+
+            // console.log(typeof (result));
+
+            let data = await fetch("http://localhost:8084/resetpwd", {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                body: jobdata
+
+            });
+
+            let result2 = await data.json();
+            document.getElementById("message").innerHTML = " ";
+            document.getElementById("message").innerHTML = result;
+        }
+    </script>
+</body>
+
+</html>

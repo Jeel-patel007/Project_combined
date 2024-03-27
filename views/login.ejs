@@ -1,0 +1,163 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log-in</title>
+    <style>
+        .dynamic {
+            font-size: small;
+            color: red;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* .content {
+            gap: 50px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+
+        } */
+
+        body {
+            /* background-color: #F9F7EE; */
+            background-image: url("desk-concept-frame-with-items.jpg");
+            background-size: 100%;
+        }
+
+        h1 {
+            color: chocolate;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 25px;
+        }
+
+        h2 {
+            color: darkslategrey;
+            font-size: 15px;
+        }
+
+        table {
+            margin: 0px auto;
+            height: 250px;
+
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        input {
+            height: 35px;
+            width: 200px;
+            border-radius: 10px;
+            color: #000000;
+        }
+
+        .fourth-button {
+            margin-top: 10px;
+            width: 150px;
+            height: 50px;
+            background-color: #FFC80A;
+            border: 2px solid #000000;
+        }
+
+        img {
+            height: 400px;
+            width: 400px;
+        }
+
+        .reg-main {
+
+            align-items: center;
+            /* border: 1px solid; */
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>24DEV078 JEEL PATEL</h1>
+        <h2>login Form</h2>
+        <div class="content">
+            <!-- <div class="img1">
+                <img src="/portrait-confident-bearded-man-using-laptop-computer 1.png">
+            </div> -->
+            <div class="reg-main">
+                <form id="refForm" onsubmit="return validForm()" autocomplete="on">
+                    <table>
+                        <tr>
+                            <span id="message"></span>
+                        </tr>
+                        <tr>
+                            <td>
+
+                                <input type="text" id="username" name="username" class="required" tabindex="1"
+                                    placeholder="User Name">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                                <input type="text" id="password" name="password" class="required" tabindex="2"
+                                    placeholder="Password">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" value="Log-in" onclick="Loginfunc()" class="fourth-button">
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <a href="/forgot">Forget Password ? </a>
+                            </td>
+                        </tr>
+                    </table>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        async function Loginfunc() {
+            let formData = document.getElementById("refForm");
+
+            let details = new FormData(formData);
+            const params = new URLSearchParams(details);
+            const jobdata = await new Response(params).text();
+
+
+            // console.log(typeof (result));
+
+            let data = await fetch("http://localhost:8084/logsave", {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                body: jobdata
+
+            })
+            console.log(data);
+            if (data.status == 200) {
+                window.location.href = '/Dashboard';
+            }
+            var result = await data.json();
+            console.log(result);
+            document.getElementById("message").innerHTML = " ";
+            document.getElementById("message").innerHTML = result;
+
+        }
+    </script>
+</body>
+
+</html>

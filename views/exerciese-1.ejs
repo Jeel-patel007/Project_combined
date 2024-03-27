@@ -1,0 +1,129 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascrpt Extercise-1</title>
+    <style>
+        body{
+            background-color:azure;
+        }
+        h1{
+            color: firebrick;
+            margin-left: 100px;
+            padding-bottom: 100px;
+        }
+        table{
+            margin-left: 100px;
+        }
+        table,tr,td{
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+        tr, td{
+               height: 100px;
+               width: 100px;
+        }
+        button{
+            width: 25px;
+            height: 25px;
+        }
+        .upbutton{
+            margin-left: 100px;
+        }
+        tr:nth-of-type(odd) td:nth-of-type(odd) ,tr:nth-of-type(even) td:nth-of-type(even){
+            background-color: black;
+        }
+    
+    </style>
+</head>
+<body>
+    <h1>24DEV078 JEEL PATEL EXERCISE-1</h1>
+    <div>
+        <button class="upbutton" id="upplus" name="upplus" onclick="addcolumn()">+</button>
+        <button  id="upminus" name="upminus" onclick="removecolumn()">-</button>
+        <table id="maintable"> 
+            <tr class="row" id="row1" name="row">
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+
+            </tr>
+            <tr    class="row" id="row1" name="row">
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+            </tr>
+
+        </table>
+        <button id="downplus" name="downplus" onclick="addrow()">+</button>
+        <button id="downminus" name="downminus" onclick="removerow()">-</button>
+    </div>
+
+    <script>
+    function  addcolumn(){
+
+        var row= document.querySelectorAll("tr");
+        for( i=0;i<row.length;i++){
+            row[i].insertCell();
+        }
+        
+    }
+    function addrow(){
+
+       var table=document.getElementById("maintable");
+        
+       var x= document.getElementById("row1").cells.length;
+        
+        var row= table.insertRow()
+        for(i=0;i<x;i++){
+            row.insertCell()
+           
+        }
+    
+    }
+
+    function removecolumn(){
+
+        var table=document.getElementById("maintable")
+        var row= document.querySelectorAll("tr");
+        var col= document.querySelectorAll("td");
+        var x= document.getElementById("row1").cells.length;
+        var r= table.rows.length;
+        
+        for(i=0;i<r;i++){
+         
+            if(x<=2){
+                alert('can-not  delet column becuase size is less than two ')
+                break;
+                
+            }
+
+           row[i].deleteCell(x-1);
+        }
+    
+
+
+
+    }
+    function removerow(){
+
+       var table=document.getElementById("maintable") 
+
+       var row=document.querySelectorAll("tr");
+       if(row.length >2){
+        table.deleteRow((row.length-1))
+       }
+       else{
+        alert('cannot delet row because size is less than two')
+       }
+       
+
+    }
+    </script>
+</body>
