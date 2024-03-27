@@ -124,8 +124,6 @@ app.get("/active", async (req, res) => {
 
 });
 
-
-
 app.get("/login", (req, res) => {
     try {
         res.render("login");
@@ -1212,7 +1210,25 @@ app.post("/ajaxinsert", async (req, res) => {
     res.send({});
 });
 
+app.get("/Dashboard/postapi", (req, res) => {
+    res.render("postapi")
+});
 
+app.get("/post", (req, res) => {
+    try {
+        res.render("post")
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+app.get("/postdetails/:id", (req, res) => {
+    try {
+        res.render("postdetails");
+    } catch (err) {
+        console.log(err);
+    }
+});
 function ExecuteData(query) {
     return new Promise((resolve, reject) => {
         connection.query(query, (error, elements) => {

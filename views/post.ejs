@@ -1,0 +1,137 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post</title>
+    <style>
+      .pagination {
+        display: flex;
+        align-items: center;
+      }
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      td,
+      table,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      button {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>24DEV078 JEEL PATEL</h1>
+      <div class="search">
+        <input type="text" id="searchcontent" name="searchcontent" />
+        <button id="searchbutton">Search</button>
+      </div>
+      <div class="Table-main">
+        <table id="postTable">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Title</th>
+              <th>Body</th>
+            </tr>
+          </thead>
+          <tbody id="postBody"></tbody>
+        </table>
+        <div class="pagination">
+          <button id="firstPage">First</button>
+          <button id="prevPage">Previous</button>
+          <div><span id="postpage"></span></div>
+          <button id="nextPage">Next</button>
+          <button id="lastPage">Last</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      const postPerPage = 10;
+      let currentpage = 1;
+      let index = 0;
+      let totalposts = 0;
+      let posts = [];
+
+      async function fetchPost(page) {
+        const responce = await fetch(
+          `https://jsonplaceholder.typicode.com/posts?_page=${page}_limit=${postPerPage}`
+        );
+        totalposts = parseInt(responce.headers.get("X-Total-Count"));
+        console.log(totalposts);
+        const posts = await responce.json();
+        // console.log(posts);
+        displayPost(posts);
+      }
+
+      function displayPost(data) {
+        let tablebody = document.getElementById("postBody");
+        tablebody.innerHTML = " ";
+        // console.log(tablebody);
+        data.forEach((post, index) => {
+          var row = tablebody.insertRow();
+          let cell1 = row.insertCell(0);
+          let cell2 = row.insertCell(1);
+          let cell3 = row.insertCell(2);
+
+          cell1.textContent = post.id;
+          cell2.textContent = post.title;
+          cell3.textContent = post.body;
+        });
+        document.getElementById("postpage").textContent = " ";
+        document.getElementById("postpage").textContent = `${currentpage}`;
+      }
+
+      document
+        .getElementById("firstPage")
+        .addEventListener("click", async () => {
+          currentpage = 1;
+          await fetchPost(currentpage);
+        });
+      document
+        .getElementById("prevPage")
+        .addEventListener("click", async () => {
+          if (currentpage > 1) {
+            currentpage--;
+            await fetchPost(currentpage);
+          } else {
+            await fetchPost(currentpage);
+          }
+        });
+      document
+        .getElementById("nextPage")
+        .addEventListener("click", async () => {
+          if (currentpage < Math.ceil(totalposts / postPerPage)) {
+            currentpage++;
+            await fetchPost(currentpage);
+          } else {
+            await fetchPost(currentpage);
+          }
+        });
+      document
+        .getElementById("lastPage")
+        .addEventListener("click", async () => {
+          currentpage = Math.ceil(totalposts / postPerPage);
+          await fetchPost(currentpage);
+        });
+      fetchPost(currentpage);
+
+      document
+        .getElementById("searchbutton")
+        .addEventListener("click", async () => {
+          let searchTerm = document.getElementById("searchcontent").value;
+          let searchresult = await fetch(
+            `https://jsonplaceholder.typicode.com/posts?q=${searchTerm}`
+          );
+          let result = await searchresult.json();
+          displayPost(result);
+
+          //   console.log(result);
+        });
+    </script>
+  </body>
+</html>

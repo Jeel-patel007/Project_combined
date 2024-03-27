@@ -73,7 +73,7 @@ async function SubmitForm() {
     var result = 'firstname=jeel'
     console.log(typeof (result));
 
-    let data = await fetch("http://localhost:8087/ajaxinsert", {
+    let data = await fetch("http://localhost:8084/ajaxinsert", {
         method: "POST",
         headers: {
             'Content-type': 'application/x-www-form-urlencoded'
@@ -100,7 +100,7 @@ async function UpdateForm() {
     var result = 'firstname=jeel'
     console.log(typeof (result));
 
-    let data = await fetch("http://localhost:8087/ajaxdatasave", {
+    let data = await fetch("http://localhost:8084/ajaxdatasave", {
         method: "POST",
         headers: {
             'Content-type': 'application/x-www-form-urlencoded'

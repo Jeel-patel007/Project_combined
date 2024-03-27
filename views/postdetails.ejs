@@ -1,0 +1,112 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post Details</title>
+    <style>
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      th {
+        border: 1px solid black;
+      }
+      td {
+        border: 1px solid black;
+      }
+      #showcomments {
+        margin: 20px;
+        height: 40px;
+        width: 200px;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="postTable">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Body</th>
+            </tr>
+          </thead>
+          <tbody id="postBody"></tbody>
+        </table>
+      </div>
+
+      <div id="comments">
+        <button id="showcomments">Show Comments</button>
+        <div id="commentdisplay" style="display: none">
+          <table>
+            <thead>
+              <tr>
+                <th>Comment -ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Comment</th>
+              </tr>
+            </thead>
+            <tbody id="commentbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const postId = window.location.pathname.split("/").pop();
+      console.log(postId);
+      let data = [];
+
+      async function fetchData(data) {
+        let result = await fetch(
+          `https://jsonplaceholder.typicode.com/posts/${postId}`
+        );
+        let post = await result.json();
+        console.log(post);
+        displayData(post);
+      }
+
+      function displayData(data) {
+        let table = document.getElementById("postBody");
+        table.innerHTML = " ";
+        let row = table.insertRow();
+        let cell3 = row.insertCell(0);
+        let cell1 = row.insertCell(1);
+        let cell2 = row.insertCell(2);
+
+        cell1.textContent = data.title;
+        cell2.textContent = data.body;
+        cell3.textContent = data.id;
+      }
+      fetchData(postId);
+
+      document
+        .getElementById("showcomments")
+        .addEventListener("click", async () => {
+          let result = await fetch(
+            `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
+          );
+          let data = await result.json();
+          console.log(data);
+          let tablebody = document.getElementById("commentbody");
+          data.forEach((post) => {
+            var row = tablebody.insertRow();
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            let cell3 = row.insertCell(2);
+            let cell4 = row.insertCell(3);
+
+            cell1.textContent = post.id;
+            cell2.textContent = post.name;
+            cell3.textContent = post.email;
+            cell4.textContent = post.body;
+          });
+          document.getElementById("commentdisplay").style.display = "block";
+        });
+    </script>
+  </body>
+</html>
