@@ -1,0 +1,169 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <title>more details</title>
+  <style>
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #showmore {
+      margin: 20px;
+    }
+
+    tr {
+      border: 1px solid black;
+    }
+
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    th {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    body {
+      background-color: #f9f7ee;
+    }
+
+    .pagging-component {
+      font-size: 30px;
+      display: flex;
+      width: 70%;
+    }
+
+    i {
+      width: 30px;
+      height: 30px;
+    }
+
+    #more_detail {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="/Dashboard">Back to Dashboard</a>
+    <h1>24DEV078 JEEL PATEL</h1>
+    <h2>serching practice</h2>
+    <div>
+      <form action="/Dashboard/searching" method="get">
+        <input type="text" name="id" placeholder="enter a id" tabindex="1">
+        <input type="submit" placeholder="go" value="go" tabindex="2">
+      </form>
+    </div>
+    <button name="showmore" id="showmore" onclick="morefunc()" tabindex="3">Show More</button>
+    <div id="more_detail">
+      <form action="/Dashboard/searching" method="get">
+        <input type="text" name="firstname" placeholder="enter a firstname" tabindex="4">
+        <input type="text" name="lastname" placeholder="lastname" tabindex="5">
+        <input type="text" name="profession" placeholder="profession" tabindex="6">
+        <input type="text" name="country" placeholder="country" tabindex="7">
+
+        <select name="option" id="option">
+          <option value="and">AND</option tabindex="8">
+          <option value="or">OR</option tabindex="9">
+        </select>
+        <input type="submit" value="go" tabindex="10">
+      </form>
+    </div>
+
+
+    <div class="pagging-component">
+      <% if(l>1){ %>
+        <a class="fa-solid fa-angles-left" class="left-arrow"
+          href="/Dashboard/searching/?p=1&firstname=<%= firstname %>&option=<%= option %>&profession=<%= profession %>&country=<%= country %>"></a>
+        <% } %>
+          <% if(l>1){ %>
+            <a class="fa-solid fa-angle-left left-arrow"
+              href="/Dashboard/searching/?p=<%= Number(l)-1 %>&id=<%=id %>&firstname=<%= firstname %>&option=<%= option %>&profession=<%= profession %>&country=<%= country %>"></a>
+            <% } %>
+              <% if(page> 1) { %>
+                <div>
+                  <%=l%>
+                </div>
+                <% } %>
+                  <% if(l>=1 && l<page){ %>
+                      <a class="fa-solid fa-angle-right"
+                        href="/Dashboard/searching/?p=<%= Number(l)+1 %>&id=<%= id %>&firstname=<%= firstname %>&option=<%= option %>&profession=<%= profession %>&country=<%= country %>"></a>
+                      <% } %>
+                        <% if(l>=1 && l<page){ %>
+                            </10>
+                            <a class="fa-solid fa-angles-right"
+                              href="/Dashboard/searching/?p=<%= page %>&firstname=<%= firstname %>&option=<%= option %>&profession=<%= profession %>&country=<%= country %>"></a>
+                            <% } %>
+    </div>
+
+
+
+
+
+    <table>
+      <tr>
+
+        <th>ID</th>
+        <th>firstname</th>
+        <th>lastname</th>
+        <th>email</th>
+
+        <th>profession</th>
+        <th>city</th>
+        <th>dataofbirth</th>
+        <th>country</th>
+
+
+      </tr>
+      <% for( let i=0;i < data.length ; i++ ) { %>
+        <tr>
+          <td>
+            <%= data[i].id %>
+          </td>
+          <td>
+            <%= data[i].firstname %>
+          </td>
+          <td>
+            <%= data[i].lastname %>
+          </td>
+          <td>
+            <%= data[i].email %>
+          </td>
+
+          <td>
+            <%= data[i].profession %>
+          </td>
+          <td>
+            <%= data[i].city %>
+          </td>
+          <td>
+            <%= data[i].dataofbirth %>
+          </td>
+          <td>
+            <%= data[i].country %>
+          </td>
+
+
+        </tr>
+
+        <% } %>
+    </table>
+
+  </div>
+
+  <script>
+    morefunc = () => {
+      document.getElementById("more_detail").style.display = "block";
+    }
+  </script>
+</body>
+
+</html>
