@@ -1,5 +1,4 @@
 
-
 module.exports = async function MiddleWare(req, res, next) {
     isValid = true;
     console.log('inside middleware');

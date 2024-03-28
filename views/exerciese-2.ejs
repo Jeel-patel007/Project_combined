@@ -13,7 +13,8 @@
     }
 
     body {
-        background-color: crimson;
+        /* background-color: crimson; */
+
     }
 
     button {
@@ -53,12 +54,13 @@
         var score = 0;
 
 
-        var timeout = 10;
+
         function startmain() {
 
+            var timeout = 10;
             startGame();
 
-            let timer = setInterval(() => {
+            var timer = setInterval(() => {
 
 
                 console.log(timeout);
@@ -79,8 +81,6 @@
 
 
         function startGame() {
-
-
 
             gameTable.innerHTML = "";
             cells = [];
@@ -120,13 +120,12 @@
                 startGame();
 
             }
-            else {
-
-                // alert('oops try again !');
-                document.getElementById("time").textContent = 'Try Again';
-                timeout = 0;
-                Finishgame(score);
-            }
+            // else {
+            //     // alert('oops try again !');
+            //     document.getElementById("time").textContent = 'Try Again';
+            //     // timeout = 0;
+            //     Finishgame(score);
+            // }
         }
 
         function updateScore(newscore) {
@@ -141,7 +140,7 @@
 
             var para = document.getElementById("endgame");
             para.innerText = "your score is : " + score;
-
+            // clearInterval(timer);
         }
 
     </script>

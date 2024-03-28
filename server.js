@@ -241,7 +241,7 @@ app.post("/resetpwd", async (req, res) => {
 
 });
 
-app.get("/Dashboard/dynamictable", (req, res) => {
+app.get("/Dashboard/dynamictable", AuthMiddle, (req, res) => {
     try {
         res.render("exerciese-1");
     }
@@ -250,7 +250,7 @@ app.get("/Dashboard/dynamictable", (req, res) => {
     }
 });
 
-app.get("/Dashboard/kukucube", (req, res) => {
+app.get("/Dashboard/kukucube", AuthMiddle, (req, res) => {
     try {
         res.render("exerciese-2");
     }
@@ -259,7 +259,7 @@ app.get("/Dashboard/kukucube", (req, res) => {
     }
 });
 
-app.get("/Dashboard/tiktactoe", (req, res) => {
+app.get("/Dashboard/tiktactoe", AuthMiddle, (req, res) => {
     try {
         res.render("tictak");
     }
@@ -268,7 +268,7 @@ app.get("/Dashboard/tiktactoe", (req, res) => {
     }
 });
 
-app.get("/Dashboard/eventtable", (req, res) => {
+app.get("/Dashboard/eventtable", AuthMiddle, (req, res) => {
     try {
         res.render("event_table")
     }
@@ -277,7 +277,7 @@ app.get("/Dashboard/eventtable", (req, res) => {
     }
 });
 
-app.get("/Dashboard/Mergesort", (req, res) => {
+app.get("/Dashboard/Mergesort", AuthMiddle, (req, res) => {
     try {
         res.render("mergesort");
     }
@@ -286,7 +286,7 @@ app.get("/Dashboard/Mergesort", (req, res) => {
     }
 });
 
-app.get("/listdatabase", function (req, res) {
+app.get("/listdatabase", AuthMiddle, function (req, res) {
     const total_page = 50000;
     const perPage = 200;
     const pageCount = Math.ceil(total_page / perPage);
@@ -319,7 +319,7 @@ app.get("/listdatabase", function (req, res) {
     });
 });
 
-app.get("/Dashboard/orderby", function (req, res) {
+app.get("/Dashboard/orderby", AuthMiddle, function (req, res) {
     let l = req.query.p;
 
     if (l < 1 || isNaN(l)) {
@@ -347,7 +347,7 @@ app.get("/Dashboard/orderby", function (req, res) {
     });
 });
 
-app.get("/report", function (req, res) {
+app.get("/report", AuthMiddle, function (req, res) {
     let l = parseInt(req.query.p);
     if (l < 1 || isNaN(l)) {
         l = 1;
@@ -380,7 +380,7 @@ app.get("/report", function (req, res) {
     });
 });
 
-app.get("/result", function (req, res) {
+app.get("/result", AuthMiddle, function (req, res) {
     let l = parseInt(req.query.p);
     if (l < 1 || isNaN(l)) {
         l = 1;
@@ -420,7 +420,7 @@ app.get("/result", function (req, res) {
     });
 });
 
-app.get("/resultdetails", function (req, res) {
+app.get("/resultdetails", AuthMiddle, function (req, res) {
     let id = req.query.id;
     console.log(req.query);
     console.log(id);
@@ -444,7 +444,7 @@ app.get("/resultdetails", function (req, res) {
     });
 });
 
-app.get("/Dashboard/searching", function (req, res) {
+app.get("/Dashboard/searching", AuthMiddle, function (req, res) {
     try {
         let id = req.query.id;
         let option = req.query.option;
@@ -514,7 +514,7 @@ app.get("/Dashboard/searching", function (req, res) {
     }
 });
 
-app.get("/Dashboard/delimetersearch", function (req, res) {
+app.get("/Dashboard/delimetersearch", AuthMiddle, function (req, res) {
     try {
         // let ini = 0;
         // fetching  user input from the req.query
@@ -631,7 +631,7 @@ app.get("/Dashboard/delimetersearch", function (req, res) {
     }
 });
 
-app.get("/Dashboard/form", (req, res) => {
+app.get("/Dashboard/form", AuthMiddle, (req, res) => {
     let data = [];
     data[0] = {};
     let data2 = {};
@@ -639,7 +639,7 @@ app.get("/Dashboard/form", (req, res) => {
     res.render("employeeform", { data, data2, data3 });
 });
 
-app.post("/Dashboard/save", async (req, res) => {
+app.post("/Dashboard/save", AuthMiddle, async (req, res) => {
 
     try {
         res.render("jobdatasave");
@@ -746,7 +746,7 @@ app.post("/Dashboard/save", async (req, res) => {
 });
 
 
-app.get("/Dashboard/update", async (req, res) => {
+app.get("/Dashboard/update", AuthMiddle, async (req, res) => {
     ``
     let query1 = `select * from basic_details`;
 
@@ -757,7 +757,7 @@ app.get("/Dashboard/update", async (req, res) => {
 
 });
 
-app.get("/Dashboard/upsave", async (req, res) => {
+app.get("/Dashboard/upsave", AuthMiddle, async (req, res) => {
     let id = req.query.id || 1;
     let query1 = ` select * , DATE_FORMAT(dateofbirth, "%Y-%m-%d") as dateofbirth  from basic_details where employee_id = ${id}`;
     let query2 = `select * from education where id=${id}`;
@@ -887,10 +887,10 @@ app.post("/datasave", async (req, res) => {
         console.log(err);
     }
 });
-app.get("/Dashboard/statecity", (req, res) => {
+app.get("/Dashboard/statecity", AuthMiddle, (req, res) => {
     res.render("ajaxstatecity");
 });
-app.get("/ajaxstatedata", (req, res) => {
+app.get("/ajaxstatedata", AuthMiddle, (req, res) => {
     // var state_arr = new Array("Andaman & Nicobar", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra & Nagar Haveli", "Daman & Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu & Kashmir", "Jharkhand", "Karnataka", "Kerala", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Orissa", "Pondicherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Tripura", "Uttar Pradesh", "Uttaranchal", "West Bengal");
 
     var s_a = new Array();
@@ -945,13 +945,13 @@ app.get("/Dashboard/ajaxform", (req, res) => {
 });
 
 
-app.get("/ajaxdatainsert", (req, res) => {
+app.get("/ajaxdatainsert", AuthMiddle, (req, res) => {
     let data = [{}], data3 = [{}], data2 = [{}], data4 = [{}], data7 = [{}], data6 = [{}], data5 = [{}];
     res.render("jobform", { data, data2, data4, data7, data6, data5, data3 });
 });
 
 
-app.get("/ajaxupdatedata", async (req, res) => {
+app.get("/ajaxupdatedata", AuthMiddle, async (req, res) => {
     let id = req.query.id || 1;
     let query1 = ` select * , DATE_FORMAT(dateofbirth, "%Y-%m-%d") as dateofbirth  from basic_details where employee_id = ${id}`;
     let query2 = `select * from education where id=${id}`;
@@ -1101,7 +1101,7 @@ app.post("/ajaxdatasave", async (req, res) => {
     }
 });
 
-app.get("/ajaxupdate", async (req, res) => {
+app.get("/ajaxupdate", AuthMiddle, async (req, res) => {
     let query = `select * from basic_details`;
     let data = await ExecuteData(query);
     res.render("ajaxupdatelist", { data });
@@ -1220,7 +1220,7 @@ app.post("/ajaxinsert", async (req, res) => {
     res.send({});
 });
 
-app.get("/Dashboard/postapi", (req, res) => {
+app.get("/Dashboard/postapi", AuthMiddle, (req, res) => {
     res.render("postapi")
 });
 

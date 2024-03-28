@@ -14,7 +14,7 @@ function showTab(n) {
     }
     if (n == (x.length - 1)) {
         document.getElementById("nextBtn").style.display = "none";
-        if (url == 'http://localhost:3034/insert') {
+        if (url == 'http://localhost:8084/ajaxdatainsert') {
             document.getElementById("submit").style.display = "inline";
         }
         else {
