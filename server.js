@@ -277,6 +277,15 @@ app.get("/Dashboard/eventtable", (req, res) => {
     }
 });
 
+app.get("/Dashboard/Mergesort", (req, res) => {
+    try {
+        res.render("mergesort");
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
 app.get("/listdatabase", function (req, res) {
     const total_page = 50000;
     const perPage = 200;
@@ -630,7 +639,7 @@ app.get("/Dashboard/form", (req, res) => {
     res.render("employeeform", { data, data2, data3 });
 });
 
-app.post("Dashboard/save", async (req, res) => {
+app.post("/Dashboard/save", async (req, res) => {
 
     try {
         res.render("jobdatasave");
@@ -738,6 +747,7 @@ app.post("Dashboard/save", async (req, res) => {
 
 
 app.get("/Dashboard/update", async (req, res) => {
+    ``
     let query1 = `select * from basic_details`;
 
     let result = await ExecuteData(query1);

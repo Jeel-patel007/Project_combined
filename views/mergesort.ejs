@@ -1,0 +1,75 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sort</title>
+  </head>
+  <style>
+    td {
+      height: 50px;
+      width: 50px;
+      border: 1px solid black;
+    }
+  </style>
+  <body>
+    <h1>24DEV078 JEEL PATEL</h1>
+    <h2>SORTING ALGORITHM : MergeSort</h2>
+
+    <input type="text" id="sortinput" />
+    <button onclick="sortArray()">Click here to sort</button>
+
+    <table id="maintable"></table>
+
+    <script>
+      function sortArray() {
+        var table = document.getElementById("maintable")
+
+        // var array=[98,45,34,23,45,56,2,3,29]
+        var sortarray = document.getElementById("sortinput").value;
+        const myarray = sortarray.split(",");
+        console.log(myarray);
+        let numberarray = [];
+        for (i = 0; i < myarray.length; i++) {
+          numberarray.push(parseInt(myarray[i]));
+        }
+
+        function MergeSort(arr){
+          if(arr.length<=1){
+            return arr;
+          }
+
+          let mid= Math.floor(arr.length/2);
+          let left= MergeSort(arr.slice(0,mid));
+          let right=MergeSort(arr.slice(mid));
+
+         return  Merge(left,right);
+
+        }
+
+        function Merge(left,right){
+
+          let arrsort=[];
+          while(left.length && right.length){
+            if(left[0] < right[0]){
+              arrsort.push(left.shift())
+            }
+            else{
+              arrsort.push(right.shift())
+            }
+          }
+
+          return [...arrsort,...left,...right]
+        }
+
+        
+        var newarray= MergeSort(numberarray);
+        // console.log(selectionSort(array))
+        var row = table.insertRow();
+        for (i = 0; i < newarray.length; i++) {
+          var cell = row.insertCell();
+          cell.innerHTML = newarray[i];
+        }
+      }
+    </script>
+  </body>
+</html>
