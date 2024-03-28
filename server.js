@@ -982,8 +982,6 @@ app.post("/ajaxdatasave", async (req, res) => {
 
     console.log(req.body);
     try {
-
-
         let data = req.body;
         console.log(data);
         let id = data.empid;
@@ -1065,8 +1063,6 @@ app.post("/ajaxdatasave", async (req, res) => {
         await ExecuteData(query10);
 
         for (let i = 0; i < data.refname.length; i++) {
-
-
             if (data.refid[i]) {
                 let query11 = `update  referencecontact set  personname='${data.refname[i]}',contactnumber='${data.refnumber[i]}',relationship='${data.refrelation[i]}' where id=${id} and ref_id=${data.refid[i]}`;
                 console.log(query11);
