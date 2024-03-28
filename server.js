@@ -3,8 +3,8 @@ var bodyParser = require("body-parser");
 var path = require("path")
 var mysql = require("mysql");
 var md5 = require("md5");
-var ValidateMiddle = require("./middleware");
-const AuthMiddle = require("./Authware")
+var ValidateMiddle = require("./Middleware/middleware");
+const AuthMiddle = require("./Middleware/Authware")
 var jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
@@ -277,7 +277,7 @@ app.get("/Dashboard/eventtable", (req, res) => {
     }
 });
 
-app.get("/Dashboard/listdatabase", function (req, res) {
+app.get("/listdatabase", function (req, res) {
     const total_page = 50000;
     const perPage = 200;
     const pageCount = Math.ceil(total_page / perPage);
@@ -306,7 +306,7 @@ app.get("/Dashboard/listdatabase", function (req, res) {
         }
         // console.log(result);
 
-        res.render("listtask", { data: result, currpage: page });
+        res.render("listtask", { data: result, l: page });
     });
 });
 
@@ -622,7 +622,7 @@ app.get("/Dashboard/delimetersearch", function (req, res) {
     }
 });
 
-app.get("Dashboard/form", (req, res) => {
+app.get("/Dashboard/form", (req, res) => {
     let data = [];
     data[0] = {};
     let data2 = {};

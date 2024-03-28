@@ -1,122 +1,168 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <title>more details</title>
-    <style>
-      table {
-        width: 90%;
-      }
-      tr {
-        border: 1px solid black;
-      }
-      td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-      body {
-        background-color: #f9f7ee;
-      }
-      .pagging-component {
-        font-size: 30px;
-        display: flex;
-        width: 70%;
-      }
-      i {
-        width: 30px;
-        height: 30px;
-      }
-    </style>
-  </head>
-  <body>
-    <div>
-      <div class="pagging-component">
-        <a
-          class="fa-solid fa-angles-left"
-          class="left-arrow"
-          onclick="leftmostEvent()"
-        ></a>
-        <a class="fa-solid fa-angle-left left-arrow" onclick="leftEvent()"></a>
-        <div><%=currpage %></div>
-        <a
-          class="fa-solid fa-angle-right"
-          class="right-arrow"
-          onclick="rightEvent()"
-        ></a>
-        <a class="fa-solid fa-angles-right" onclick="rightmostEvent()"></a>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <title>more details</title>
+  <style>
+    h1 {
+      font-size: 30px;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      color: cadetblue;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    table {
+      width: 90%;
+    }
+
+    tr {
+      border: 1px solid black;
+    }
+
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    body {
+      background-color: #f9f7ee;
+    }
+
+    .pagging-component {
+      font-size: 30px;
+      display: flex;
+      width: 70%;
+    }
+
+    i {
+      width: 30px;
+      height: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="/Dashboard">Go Back</a>
+    <div class="pagging-component">
+      <% if(l>1){ %>
+        <a class="fa-solid fa-angles-left" class="left-arrow" href="/listdatabase?p=1"></a>
+        <% } %>
+          <% if(l>1){ %>
+            <a class="fa-solid fa-angle-left left-arrow" href="/listdatabase?p=<%= Number(l)-1 %>"></a>
+            <% } %>
+              <div>
+                <%=l%>
+              </div>
+
+              <% if(l>=1 && l<10){ %>
+                  <a class="fa-solid fa-angle-right" href="/listdatabase?p=<%= Number(l)+1 %>"></a>
+                  <% } %>
+                    <% if(l>=1 && l<10){ %>
+                        </10>
+                        <a class="fa-solid fa-angles-right" href="/listdatabase?p=250"></a>
+                        <% } %>
     </div>
 
-    <table>
+
+  </div>
+
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>firstname</th>
+      <th>lastname</th>
+      <th>email</th>
+      <th>email2</th>
+      <th>profession</th>
+      <th>city</th>
+      <th>dataofbirth</th>
+      <th>country</th>
+      <th>gender</th>
+      <th>create_date</th>
+    </tr>
+    <% for( let i=0;i < data.length ; i++ ) { %>
       <tr>
-        <th>ID</th>
-        <th>firstname</th>
-        <th>lastname</th>
-        <th>email</th>
-        <th>email2</th>
-        <th>profession</th>
-        <th>city</th>
-        <th>dataofbirth</th>
-        <th>country</th>
-        <th>gender</th>
-        <th>create_date</th>
-      </tr>
-      <% for( let i= 0;i < data.length ; i++ ) { %>
-      <tr>
-        <td><%= data[i].student_id %></td>
-        <td><%= data[i].firstname %></td>
-        <td><%= data[i].lastname %></td>
-        <td><%= data[i].email %></td>
-        <td><%= data[i].email2 %></td>
-        <td><%= data[i].profession %></td>
-        <td><%= data[i].city %></td>
-        <td><%= data[i].dateofbirth %></td>
-        <td><%= data[i].country %></td>
-        <td><%= data[i].xender %></td>
-        <td><%= data[i].create_date %></td>
+        <td>
+          <%= data[i].student_id %>
+        </td>
+        <td>
+          <%= data[i].firstname %>
+        </td>
+        <td>
+          <%= data[i].lastname %>
+        </td>
+        <td>
+          <%= data[i].email %>
+        </td>
+        <td>
+          <%= data[i].email2 %>
+        </td>
+        <td>
+          <%= data[i].profession %>
+        </td>
+        <td>
+          <%= data[i].city %>
+        </td>
+        <td>
+          <%= data[i].dateofbirth %>
+        </td>
+        <td>
+          <%= data[i].country %>
+        </td>
+        <td>
+          <%= data[i].xender %>
+        </td>
+        <td>
+          <%= data[i].create_date %>
+        </td>
       </tr>
 
       <% } %>
-    </table>
-    <script>
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
+  </table>
+  <!-- <script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
 
-      leftmostEvent = () => {
-        let page = 1;
+    leftmostEvent = () => {
+      let page = 1;
 
-        window.location.href = `http://localhost:8081/listdatabase?p=${page}`;
-      };
-      leftEvent = () => {
-        let param = urlParams.get("p");
-        param--;
-        // console.log(param);
-        if (isNaN(param) || param < 1) {
-          document.getElementsByClassName("left-arrow").style.display = "none";
-        } else {
-          window.location.href = `http://localhost:8081/listdatabase?p=${param}`;
-        }
-        console.log(param);
-      };
-      rightEvent = () => {
-        let param = urlParams.get("p");
-        param++;
+      window.location.href = `http://localhost:8084/listdatabase?p=${page}`;
+    };
+    leftEvent = () => {
+      let param = urlParams.get("p");
+      param--;
+      // console.log(param);
+      if (isNaN(param) || param < 1) {
+        document.getElementsByClassName("left-arrow").style.display = "none";
+      } else {
+        window.location.href = `http://localhost:8084/listdatabase?p=${param}`;
+      }
+      console.log(param);
+    };
+    rightEvent = () => {
+      let param = urlParams.get("p");
+      param++;
 
-        if (param > 250) {
-          document.getElementsByClassName("right-arrow").style.display = "none";
-        } else {
-          window.location.href = `http://localhost:8081/listdatabase?p=${param}`;
-        }
-      };
-      rightmostEvent = () => {
-        let page = 250;
+      if (param > 250) {
+        document.getElementsByClassName("right-arrow").style.display = "none";
+      } else {
+        window.location.href = `http://localhost:8084/listdatabase?p=${param}`;
+      }
+    };
+    rightmostEvent = () => {
+      let page = 250;
 
-        window.location.href = `http://localhost:8081/listdatabase?p=${page}`;
-      };
-    </script>
-  </body>
+      window.location.href = `http://localhost:8084/listdatabase?p=${page}`;
+    };
+  </script> -->
+</body>
+
 </html>
