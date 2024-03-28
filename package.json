@@ -1,0 +1,31 @@
+{
+  "name": "project_combined",
+  "version": "1.0.0",
+  "description": "It is project of merging all the exercises .",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jeel-patel007/Project_combined.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jeel-patel007/Project_combined/issues"
+  },
+  "homepage": "https://github.com/Jeel-patel007/Project_combined#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "md5": "^2.3.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^3.1.0"
+  }
+}
