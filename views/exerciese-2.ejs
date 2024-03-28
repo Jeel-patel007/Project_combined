@@ -43,7 +43,7 @@
         <table id="game-table"></table>
     </div>
 
-    <button onclick="startGame()">Start Game</button>
+    <button onclick="startmain()">Start Game</button>
     <p id="endgame"></p>
 
     <script>
@@ -51,27 +51,36 @@
         var cells = [];
         var counter = 2;
         var score = 0;
+
+
         var timeout = 10;
+        function startmain() {
+
+            startGame();
+
+            let timer = setInterval(() => {
+
+
+                console.log(timeout);
+                if (timeout <= 0) {
+                    clearInterval(timer)
+                    // alert(`times up  `);
+                    document.getElementById("time").textContent = 'Try Again';
+                    Finishgame(score);
+
+                }
+                else {
+                    document.getElementById("time").textContent = timeout;
+                }
+                timeout--;
+
+            }, 1000);
+        }
 
 
         function startGame() {
 
-            let timer = setInterval((dipalytime) => {
 
-                document.getElementById("time").textContent = timeout;
-                timeout--;
-
-                if (timeout === 0) {
-                    alert(`times up  `)
-                    Finishgame(score);
-
-
-                }
-                if (timeout < 0) {
-                    document.getElementById("timeout").style.display = 'none';
-                }
-
-            }, 2000);
 
             gameTable.innerHTML = "";
             cells = [];
@@ -102,6 +111,7 @@
             colnumber[index].isDifferent = true;
 
         }
+
         function cellclickeventHandler() {
             if (this.isDifferent) {
                 counter++;
@@ -112,7 +122,9 @@
             }
             else {
 
-                alert('oops try again !');
+                // alert('oops try again !');
+                document.getElementById("time").textContent = 'Try Again';
+                timeout = 0;
                 Finishgame(score);
             }
         }
