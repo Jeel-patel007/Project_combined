@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 require('dotenv').config();
 const PORT = process.env.port;
-console.log(PORT);
+// console.log(PORT);
 // PORT = 8084;
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -19,6 +19,7 @@ app.use(cookieParser());
 // app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 // mysql database connection
+
 const connection = mysql.createConnection({
     host: "127.0.0.1",
     user: "root",
@@ -160,15 +161,13 @@ app.post("/logsave", async (req, res) => {
                 res.json('invalid credential')
             }
             else {
-
                 let jwtSecretKey = process.env.JWT_SECRET_KEY;
                 let data = {
                     time: Date(),
                     userId: result.user_id
                 }
-
                 const token = jwt.sign(data, jwtSecretKey, { expiresIn: '1h' });
-                res.cookie('token', token, { expires: new Date(Date.now() + 900000), httpOnly: true })
+                res.cookie('token', token, { expires: new Date(Date.now() + 3600000), httpOnly: true })
                 res.status(200);
                 res.json('login suceesful')
                 // window.location.href = '/home'
@@ -236,6 +235,7 @@ app.post("/resetpwd", async (req, res) => {
         let pwd = md5(pwd_entered);
         let query = `update users set pwd = '${pwd}' where user_id = ${result[0].user_id}`;
         await ExecuteData(query);
+        res.json('password updated');
     }
     catch (err) {
         console.log(err);
@@ -475,7 +475,7 @@ app.get("/Dashboard/searching", AuthMiddle, function (req, res) {
             // if error then
             if (err) {
                 console.log(err);
-                res.render("invalid");
+                res.render("serinvalid");
             } else {
                 let l = req.query.p;
 
@@ -746,10 +746,8 @@ app.post("/Dashboard/save", AuthMiddle, async (req, res) => {
     }
 
 });
-
-
 app.get("/Dashboard/update", AuthMiddle, async (req, res) => {
-    ``
+
     let query1 = `select * from basic_details`;
 
     let result = await ExecuteData(query1);
@@ -758,7 +756,6 @@ app.get("/Dashboard/update", AuthMiddle, async (req, res) => {
 
 
 });
-
 app.get("/Dashboard/upsave", AuthMiddle, async (req, res) => {
     let id = req.query.id || 1;
     let query1 = ` select * , DATE_FORMAT(dateofbirth, "%Y-%m-%d") as dateofbirth  from basic_details where employee_id = ${id}`;
@@ -785,8 +782,6 @@ app.get("/Dashboard/upsave", AuthMiddle, async (req, res) => {
     // console.log(result1);
     res.render("update", { data: result1, data2: result2, data3: result7, data4: result5, data5: result6, data6: result4, data7: result3 });
 });
-
-
 app.post("/datasave", async (req, res) => {
     try {
 
@@ -952,7 +947,6 @@ app.get("/ajaxdatainsert", AuthMiddle, (req, res) => {
     res.render("jobform", { data, data2, data4, data7, data6, data5, data3 });
 });
 
-
 app.get("/ajaxupdatedata", AuthMiddle, async (req, res) => {
     let id = req.query.id || 1;
     let query1 = ` select * , DATE_FORMAT(dateofbirth, "%Y-%m-%d") as dateofbirth  from basic_details where employee_id = ${id}`;
@@ -1036,7 +1030,7 @@ app.post("/ajaxdatasave", async (req, res) => {
 
             let query8 = `update language_known set languageknown='${data.gujarati}',canread=${canread},canwrite=${canwrite},canspeak=${canspeak} where id=${id} and languageknown='${data.gujarati}'`;
 
-            // console.log(query8);
+            console.log(query8);
             await ExecuteData(query8);
         }
 

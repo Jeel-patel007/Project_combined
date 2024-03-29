@@ -113,16 +113,26 @@
     <div class="table">
       <table>
         <tr>
-          <th><a id="arrow1" class="fa-solid fa-angle-up" href="/report?order=asc&column=id" onclick="funcblur()"> </a>
-            <a class="fa-solid fa-angle-down" href="/report?order=desc&column=id"> </a>Student_id
+          <th><a id="arrow1" class="fa-solid fa-angle-up"
+              href="/report?order=asc&column=id&month=<%= month %>&year=<%= year %>" onclick="funcblur()"> </a>
+            <a class="fa-solid fa-angle-down" href="/report?order=desc&column=id&month=<%= month %>&year=<%= year %>">
+            </a>Student_id
           </th>
-          <th><a class="fa-solid fa-angle-up" href="/report?order=asc&column=firstname"> </a> <a
-              class="fa-solid fa-angle-down" href="/report?order=desc&column=firstname"> </a>Student_name</th>
+          <th><a class="fa-solid fa-angle-up"
+              href="/report?order=asc&column=firstname&month=<%= month %>&year=<%= year %>"> </a> <a
+              class="fa-solid fa-angle-down"
+              href="/report?order=desc&column=firstname&month=<%= month %>&year=<%= year %>"> </a>Student_name</th>
 
-          <th><a class="fa-solid fa-angle-up" href="/report?order=asc&column=atten_count"></a><a
-              class="fa-solid fa-angle-down" href="/report?order=desc&column=atten_count"></a>No.of days Present</th>
-          <th><a class="fa-solid fa-angle-up" href="/report?order=asc&column=persentage"></a><a
-              class="fa-solid fa-angle-down" href="/report?order=desc&column=persentage"></a>Attendence Percentage</th>
+          <th><a class="fa-solid fa-angle-up"
+              href="/report?order=asc&column=atten_count&month=<%= month %>&year=<%= year %>"></a><a
+              class="fa-solid fa-angle-down"
+              href="/report?order=desc&column=atten_count&month=<%= month %>&year=<%= year %>"></a>No.of days Present
+          </th>
+          <th><a class="fa-solid fa-angle-up"
+              href="/report?order=asc&column=persentage&month=<%= month %>&year=<%= year %>"></a><a
+              class="fa-solid fa-angle-down"
+              href="/report?order=desc&column=persentage&month=<%= month %>&year=<%= year %>"></a>Attendence Percentage
+          </th>
         </tr>
 
         <% for( let i=0;i < data.length ; i++ ) { %>
