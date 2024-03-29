@@ -60,17 +60,12 @@
         var cells = [];
         var counter = 2;
         var score = 0;
-
-
-
         function startmain() {
             document.getElementById("startgame").style.display = 'none';
             var timeout = 10;
             startGame();
 
             var timer = setInterval(() => {
-
-
                 console.log(timeout);
                 if (timeout <= 0) {
                     clearInterval(timer)
