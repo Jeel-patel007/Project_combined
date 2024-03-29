@@ -10,7 +10,9 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 require('dotenv').config();
-const PORT = process.env.PORT;
+// const PORT = process.env.PORT;
+// console.log(PORT);
+PORT = 8084;
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
