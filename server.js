@@ -8,6 +8,7 @@ const AuthMiddle = require("./Middleware/Authware")
 var jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
+
 const app = express();
 require('dotenv').config();
 const PORT = process.env.port;
@@ -121,13 +122,9 @@ app.get("/active", async (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-    try {
-        res.render("login");
-    }
 
-    catch (err) {
-        console.log(err);
-    }
+    res.render("login");
+
 
 });
 app.post("/logsave", async (req, res) => {
@@ -173,25 +170,15 @@ app.post("/logsave", async (req, res) => {
 });
 
 app.get("/Dashboard", AuthMiddle, (req, res) => {
-    try {
-
-        res.render("home");
-
-    }
-    catch (err) {
-        console.log(err);
-    }
+    res.render("home");
 
 
 });
 
 app.get("/forgot", (req, res) => {
-    try {
-        res.render("forgetpws");
-    }
-    catch (err) {
-        console.log(err);
-    }
+
+    res.render("forgetpws");
+
 
 });
 
@@ -237,142 +224,144 @@ app.post("/resetpwd", async (req, res) => {
 });
 
 app.get("/Dashboard/dynamictable", AuthMiddle, (req, res) => {
-    try {
-        res.render("exerciese-1");
-    }
-    catch (err) {
 
-    }
+    res.render("exerciese-1");
+
 });
 
 app.get("/Dashboard/kukucube", AuthMiddle, (req, res) => {
-    try {
-        res.render("exerciese-2");
-    }
-    catch (err) {
-        console.log(err);
-    }
+
+    res.render("exerciese-2");
 });
 
 app.get("/Dashboard/tiktactoe", AuthMiddle, (req, res) => {
-    try {
-        res.render("tictak");
-    }
-    catch (err) {
-        console.log(err);
-    }
+
+    res.render("tictak");
+
 });
 
 app.get("/Dashboard/eventtable", AuthMiddle, (req, res) => {
-    try {
-        res.render("event_table")
-    }
-    catch (err) {
-        console.log(err);
-    }
+
+    res.render("event_table")
+
 });
 
 app.get("/Dashboard/Mergesort", AuthMiddle, (req, res) => {
+
+    res.render("mergesort");
+
+});
+
+app.get("/listdatabase", AuthMiddle, function (req, res) {
     try {
-        res.render("mergesort");
+        const total_page = 50000;
+        const perPage = 200;
+        const pageCount = Math.ceil(total_page / perPage);
+        //   let page = 1;
+        let page = parseInt(req.query.p);
+        let order = req.query.order;
+        //   console.log(page);
+        //   console.log(page);
+        if (pageCount < 1) {
+            pageCount = 1;
+        }
+        if (isNaN(page)) {
+            page = 1;
+            // console.log("inside if");
+        }
+
+        let offset = (page - 1) * 200;
+
+        let query = `select * from student_master1 limit 200 offset ${offset}`;
+
+        connection.query(query, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("data selected");
+            }
+            // console.log(result);
+
+            res.render("listtask", { data: result, l: page });
+        });
     }
     catch (err) {
         console.log(err);
     }
-});
 
-app.get("/listdatabase", AuthMiddle, function (req, res) {
-    const total_page = 50000;
-    const perPage = 200;
-    const pageCount = Math.ceil(total_page / perPage);
-    //   let page = 1;
-    let page = parseInt(req.query.p);
-    let order = req.query.order;
-    //   console.log(page);
-    //   console.log(page);
-    if (pageCount < 1) {
-        pageCount = 1;
-    }
-    if (isNaN(page)) {
-        page = 1;
-        // console.log("inside if");
-    }
-
-    let offset = (page - 1) * 200;
-
-    let query = `select * from student_master1 limit 200 offset ${offset}`;
-
-    connection.query(query, function (err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("data selected");
-        }
-        // console.log(result);
-
-        res.render("listtask", { data: result, l: page });
-    });
 });
 
 app.get("/Dashboard/orderby", AuthMiddle, function (req, res) {
-    let l = req.query.p;
+    try {
+        let l = req.query.p;
 
-    if (l < 1 || isNaN(l)) {
-        l = 1;
-    }
-    if (l > 250) {
-        l = 250;
-    }
-
-    let order = req.query.order || "asc";
-    let column = req.query.column || "student_id";
-    let offset = (Number(l) - 1) * 200;
-
-    let query = `select * from student_master1 order by  ${column}  ${order} limit 200 offset ${offset}`;
-    connection.query(query, function (err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("data selected");
+        if (l < 1 || isNaN(l)) {
+            l = 1;
+        }
+        if (l > 250) {
+            l = 250;
         }
 
-        // console.log(result);
+        let order = req.query.order || "asc";
+        let column = req.query.column || "student_id";
+        let offset = (Number(l) - 1) * 200;
 
-        res.render("orderby", { data: result, l, order, column });
-    });
+        let query = `select * from student_master1 order by  ${column}  ${order} limit 200 offset ${offset}`;
+        connection.query(query, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("data selected");
+            }
+
+            // console.log(result);
+
+            res.render("orderby", { data: result, l, order, column });
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+
 });
 
 app.get("/report", AuthMiddle, function (req, res) {
-    let l = parseInt(req.query.p);
-    if (l < 1 || isNaN(l)) {
-        l = 1;
-    }
-    if (l > 10) {
-        l = 10;
-    }
-
-    let month = req.query.month || "december";
-    let year = req.query.year || "2023";
-    let offset = (Number(l) - 1) * 20;
-    let order = req.query.order || "asc";
-    let column = req.query.column || "id";
-
-    let query = `select s.id,s.firstname, count(id) as atten_count ,count(month(atten_date))*100 / (30) as persentage from student_master s
-    left join attendence_master e
-    on s.id = e.studentid
-    where monthname(atten_date) = '${month}' and year(atten_date)='${year}' and e.stu_status ="present"
-    group by id order by ${column} ${order}  limit 20 offset ${offset}`;
-
-    connection.query(query, function (err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("data fetched");
+    try {
+        let l = parseInt(req.query.p);
+        if (l < 1 || isNaN(l)) {
+            l = 1;
         }
-        // console.log(result);
-        console.log(month);
-        res.render("report", { data: result, l, month, year, order, column });
-    });
+        if (l > 10) {
+            l = 10;
+        }
+
+        let month = req.query.month || "december";
+        let year = req.query.year || "2023";
+        let offset = (Number(l) - 1) * 20;
+        let order = req.query.order || "asc";
+        let column = req.query.column || "id";
+
+        let query = `select s.id,s.firstname, count(id) as atten_count ,count(month(atten_date))*100 / (30) as persentage from student_master s
+        left join attendence_master e
+        on s.id = e.studentid
+        where monthname(atten_date) = '${month}' and year(atten_date)='${year}' and e.stu_status ="present"
+        group by id order by ${column} ${order}  limit 20 offset ${offset}`;
+
+        connection.query(query, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("data fetched");
+            }
+            // console.log(result);
+            console.log(month);
+            res.render("report", { data: result, l, month, year, order, column });
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+
 });
 
 app.get("/result", AuthMiddle, function (req, res) {
@@ -638,257 +627,7 @@ app.get("/Dashboard/delimetersearch", AuthMiddle, function (req, res) {
     }
 });
 
-app.get("/Dashboard/form", AuthMiddle, (req, res) => {
-    let data = [];
-    data[0] = {};
-    let data2 = {};
-    let data3 = {};
-    res.render("employeeform", { data, data2, data3 });
-});
 
-app.post("/Dashboard/save", AuthMiddle, async (req, res) => {
-
-    try {
-        res.render("jobdatasave");
-        let data = req.body;
-        // console.log(data);
-
-
-        let query1 = `insert into basic_details(first_name,last_name,email,designation,address1,address2,city,state,phonenumber,zipcode,xender,dateofbirth,relationshipstatus) values ('${data.firstname}','${data.lastname}','${data.email}','${data.designation1}','${data.address1}','${data.address2}','${data.city}','${data.state}',
-       '${data.phonenumber}','${data.zipcode}','${data.gender}','${data.dateofbirth}','${data.rstatus}')`;
-        let result = await ExecuteData(query1);
-        let id = result.insertId;
-
-        // console.log(id);
-
-        // console.log(data.board);
-        for (let i = 0; i < data.board.length; i++) {
-            if (data.board[i]) {
-                let query2 = `insert into education(id,coursename,yearofpassing,percentage) values(${id},'${data.board[i]}',${data.year[i]},${data.marks[i]})`;
-                // console.log(query2);
-                await ExecuteData(query2);
-            }
-        }
-
-
-        if (data.hindi) {
-            let canread = data.hindiread || 0;
-            let canwrite = data.hindiwrite || 0;
-            let canspeak = data.hindispeak || 0;
-            let query6 = `insert into language_known(id,languageknown,canread,canwrite,canspeak) values(${id},'${data.hindi}',${canread},${canwrite},${canspeak})`;
-            // console.log(query6);
-            await ExecuteData(query6);
-        }
-        if (data.english) {
-
-            let canread = data.englishread || 0;
-            let canwrite = data.englishwrite || 0;
-            let canspeak = data.englishspeak || 0;
-
-            let query7 = `insert into language_known(id,languageknown,canread,canwrite,canspeak) values(${id},'${data.english}',${canread},${canwrite},${canspeak})`;
-            // console.log(query7);
-            await ExecuteData(query7);
-        }
-
-        if (data.gujarati) {
-
-            let canread = data.gujratiread || 0;
-            let canwrite = data.gujratiwrite || 0;
-            let canspeak = data.gujratispeak || 0;
-
-            let query8 = `insert into language_known(id,languageknown,canread,canwrite,canspeak) values(${id},'${data.gujarati}',${canread},${canwrite},${canspeak})`;
-            // console.log(query8);
-            await ExecuteData(query8);
-        }
-        let technology = [];
-        let level = [];
-        technology.push(data.phptech || 0)
-        technology.push(data.mysqltech || 0)
-        technology.push(data.laraveltech || 0)
-        technology.push(data.oracletech || 0)
-
-        level.push(data.php || 0)
-        level.push(data.mysql || 0)
-        level.push(data.laravel || 0)
-        level.push(data.oracle || 0)
-        // console.log(technology);
-        // console.log(level);
-        for (let i = 0; i < 4; i++) {
-            if (technology[i]) {
-                let query9 = `insert into technology_known_master(id,technologyknown,level) value(${id},'${technology[i]}','${level[i]}')`;
-                // console.log(query9);
-                await ExecuteData(query9);
-            }
-        }
-
-        let query10 = `insert into preference(id,preferedlocation,noticeperiod,expectedctc,currentctc,department) values (${id},'${data.preferedlocation}','${data.noticeperiod}',${data.expectedctc},${data.currentctc},'${data.department}')`;
-        await ExecuteData(query10);
-        // console.log(query10);
-        for (let i = 0; i <= data.refname.length; i++) {
-
-
-            if (data.refname[i]) {
-                let query11 = `insert into  referencecontact(id,personname,contactnumber,relationship) values(${id},'${data.refname[i]}','${data.refnumber[i]}','${data.refrelation[i]}')`;
-                // console.log(query11);
-                await ExecuteData(query11);
-            }
-        }
-
-
-        for (let i = 0; i < data.companyname.length; i++) {
-            if (data.companyname[i]) {
-
-                let query13 = `insert into  work_experience(id,companyname ,designation,startdate ,enddate) values(${id},'${data.companyname[i]}','${data.designation2[i]}','${data.from[i]}','${data.to[i]}')`;
-                // console.log(query13);
-                await ExecuteData(query13);
-            }
-        }
-
-
-    }
-    catch (err) {
-        console.log(err);
-    }
-
-});
-app.get("/Dashboard/update", AuthMiddle, async (req, res) => {
-
-    let query1 = `select * from basic_details`;
-
-    let result = await ExecuteData(query1);
-    // console.log(result);
-    res.render("listofemployee", { data: result });
-
-
-});
-app.get("/Dashboard/upsave", AuthMiddle, async (req, res) => {
-    let id = req.query.id || 1;
-    let query1 = ` select * , DATE_FORMAT(dateofbirth, "%Y-%m-%d") as dateofbirth  from basic_details where employee_id = ${id}`;
-    let query2 = `select * from education where id=${id}`;
-    let query3 = `select * from language_known where id=${id}`;
-    let query4 = `select * from technology_known_master where id=${id}`;
-    let query5 = `select * , DATE_FORMAT(startdate, "%Y-%m-%d")as startdate , DATE_FORMAT(enddate, "%Y-%m-%d")as enddate from work_experience where id=${id}`;
-    let query6 = `select * from referencecontact where id=${id}`;
-    let query7 = `select * from preference where id=${id}`;
-    let result1 = await ExecuteData(query1);
-    let result2 = await ExecuteData(query2);
-    let result3 = await ExecuteData(query3);
-    let result4 = await ExecuteData(query4);
-    let result5 = await ExecuteData(query5);
-    let result6 = await ExecuteData(query6);
-    let result7 = await ExecuteData(query7);
-    if (result1.length == 0) {
-        result1 = [{}];
-    }
-    if (result7.length == 0) {
-        result7 = [{}];
-    }
-    // console.log(result4);
-    // console.log(result1);
-    res.render("update", { data: result1, data2: result2, data3: result7, data4: result5, data5: result6, data6: result4, data7: result3 });
-});
-app.post("/datasave", async (req, res) => {
-    try {
-
-
-        let data = req.body;
-        console.log(data);
-        let id = req.query.id || 1;
-        console.log(data);
-        let query1 = `update basic_details set first_name= '${data.firstname}' , last_name= '${data.lastname}', email='${data.email}' , designation=
-      '${data.designation1}' ,city ='${data.city}' , dateofbirth= '${data.dateofbirth}' ,state ='${data.state}' ,address1='${data.address1}',address2='${data.address2}',relationshipstatus='${data.rstatus}',xender='${data.gender}',zipcode='${data.zipcode}' where employee_id=${id}`;
-        // console.log(query1);
-        await ExecuteData(query1);
-
-        for (let i = 0; i < data.board.length; i++) {
-            if (data.board[i]) {
-                let query2 = `update education set coursename='${data.board[i]}',yearofpassing=${data.year[i]},percentage=${data.marks[i]} where id=${id} and edu_id=${data.eduid[i]}`;
-                // console.log(query2);
-                await ExecuteData(query2);
-            }
-        }
-
-        if (data.hindi) {
-            let canread = data.hindiread || 0;
-            let canwrite = data.hindiwrite || 0;
-            let canspeak = data.hindispeak || 0;
-            let query6 = `update language_known set languageknown='${data.hindi}',canread=${canread},canwrite=${canwrite},canspeak=${canspeak} where id=${id} and languageknown='${data.hindi}'`;
-            // console.log(query6);
-            await ExecuteData(query6);
-        }
-        if (data.english) {
-
-            let canread = data.englishread || 0;
-            let canwrite = data.englishwrite || 0;
-            let canspeak = data.englishspeak || 0;
-
-            let query7 = `update language_known set languageknown='${data.english}',canread=${canread},canwrite=${canwrite},canspeak=${canspeak} where id=${id} and languageknown='${data.english}'`;
-            // console.log(query7);
-            await ExecuteData(query7);
-        }
-
-        if (data.gujarati) {
-
-            let canread = data.gujratiread || 0;
-            let canwrite = data.gujratiwrite || 0;
-            let canspeak = data.gujratispeak || 0;
-
-            let query8 = `update language_known set languageknown='${data.gujarati}',canread=${canread},canwrite=${canwrite},canspeak=${canspeak} where id=${id} and languageknown='${data.gujarati}'`;
-
-            // console.log(query8);
-            await ExecuteData(query8);
-        }
-
-        let technology = [];
-        let level = [];
-        technology.push(data.phptech || 0)
-        technology.push(data.mysqltech || 0)
-        technology.push(data.laraveltech || 0)
-        technology.push(data.oracletech || 0)
-
-        level.push(data.php || 0)
-        level.push(data.mysql || 0)
-        level.push(data.laravel || 0)
-        level.push(data.oracle || 0)
-        // console.log(technology);
-        // console.log(level);
-        for (let i = 0; i < 4; i++) {
-            if (technology[i]) {
-                let query9 = `update  technology_known_master set technologyknown='${technology[i]}',level='${level[i]}' where id=${id} and technologyknown='${technology[i]}'`;
-                // console.log(query9);
-                await ExecuteData(query9);
-            }
-        }
-        let query10 = `update preference set  preferedlocation='${data.preferedlocation}',noticeperiod='${data.noticeperiod}',expectedctc=${data.expectedctc},currentctc=${data.currentctc},department='${data.department}' where id=${id}`;
-        console.log(query10);
-        await ExecuteData(query10);
-
-        for (let i = 0; i <= data.refname.length; i++) {
-
-
-            if (data.refname[i]) {
-                let query11 = `update  referencecontact set  personname='${data.refname[i]}',contactnumber='${data.refnumber[i]}',relationship='${data.refrelation[i]}' where id=${id} and ref_id=${data.refid[i]}`;
-                // console.log(query11);
-                await ExecuteData(query11);
-            }
-        }
-
-
-        for (let i = 0; i < data.companyname.length; i++) {
-            if (data.companyname[i]) {
-
-                let query13 = `update  work_experience set companyname ='${data.companyname[i]}',designation='${data.designation2[i]}',startdate='${data.from[i]}',enddate='${data.to[i]}' where id=${id} and exper_id=${data.workid[i]}`;
-                console.log(query13);
-                await ExecuteData(query13);
-            }
-        }
-
-        res.render("updated");
-    }
-    catch (err) {
-        console.log(err);
-    }
-});
 app.get("/Dashboard/statecity", AuthMiddle, (req, res) => {
     res.render("ajaxstatecity");
 });
@@ -953,30 +692,36 @@ app.get("/ajaxdatainsert", AuthMiddle, (req, res) => {
 });
 
 app.get("/ajaxupdatedata", AuthMiddle, async (req, res) => {
-    let id = req.query.id || 1;
-    let query1 = ` select * , DATE_FORMAT(dateofbirth, "%Y-%m-%d") as dateofbirth  from basic_details where employee_id = ${id}`;
-    let query2 = `select * from education where id=${id}`;
-    let query3 = `select * from language_known where id=${id}`;
-    let query4 = `select * from technology_known_master where id=${id}`;
-    let query5 = `select * , DATE_FORMAT(startdate, "%Y-%m-%d")as startdate , DATE_FORMAT(enddate, "%Y-%m-%d")as enddate from work_experience where id=${id}`;
-    let query6 = `select * from referencecontact where id=${id}`;
-    let query7 = `select * from preference where id=${id}`;
-    let result1 = await ExecuteData(query1);
-    let result2 = await ExecuteData(query2);
-    let result3 = await ExecuteData(query3);
-    let result4 = await ExecuteData(query4);
-    let result5 = await ExecuteData(query5);
-    let result6 = await ExecuteData(query6);
-    let result7 = await ExecuteData(query7);
-    if (result1.length == 0) {
-        result1 = [{}];
+    try {
+        let id = req.query.id || 1;
+        let query1 = ` select * , DATE_FORMAT(dateofbirth, "%Y-%m-%d") as dateofbirth  from basic_details where employee_id = ${id}`;
+        let query2 = `select * from education where id=${id}`;
+        let query3 = `select * from language_known where id=${id}`;
+        let query4 = `select * from technology_known_master where id=${id}`;
+        let query5 = `select * , DATE_FORMAT(startdate, "%Y-%m-%d")as startdate , DATE_FORMAT(enddate, "%Y-%m-%d")as enddate from work_experience where id=${id}`;
+        let query6 = `select * from referencecontact where id=${id}`;
+        let query7 = `select * from preference where id=${id}`;
+        let result1 = await ExecuteData(query1);
+        let result2 = await ExecuteData(query2);
+        let result3 = await ExecuteData(query3);
+        let result4 = await ExecuteData(query4);
+        let result5 = await ExecuteData(query5);
+        let result6 = await ExecuteData(query6);
+        let result7 = await ExecuteData(query7);
+        if (result1.length == 0) {
+            result1 = [{}];
+        }
+        if (result7.length == 0) {
+            result7 = [{}];
+        }
+        // console.log(result4);
+        // console.log(result5);
+        res.render("jobform", { data: result1, data2: result2, data3: result7, data4: result5, data5: result6, data6: result4, data7: result3 });
     }
-    if (result7.length == 0) {
-        result7 = [{}];
+    catch (err) {
+        console.log(err);
     }
-    // console.log(result4);
-    // console.log(result5);
-    res.render("jobform", { data: result1, data2: result2, data3: result7, data4: result5, data5: result6, data6: result4, data7: result3 });
+
 });
 
 app.post("/ajaxdatasave", async (req, res) => {
