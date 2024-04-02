@@ -37,57 +37,50 @@ app.get("/", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-    try {
-        let message = '';
-        data = {};
-        res.render("form", { message, data });
-    }
-    catch (err) {
-        console.log(err);
-    }
+
+    let message = '';
+    data = {};
+    res.render("form", { message, data });
 
 });
 
 app.post("/save", ValidateMiddle, async (req, res) => {
     try {
         let data = req.body;
-        if (data.email == '') {
-            res.send('invalid data ')
+
+        const randomAlphaNumeric = length => {
+            let s = '';
+            Array.from({ length }).some(() => {
+                s += Math.random().toString(36).slice(2);
+                return s.length >= length;
+            });
+            return s.slice(0, length);
+        };
+        let Query1 = `select * from users where email = '${data.email}'`;
+        let Result1 = await ExecuteData(Query1);
+        if (Result1.length > 0) {
+            // console.log('invalid email');
+            let message = 'Email already Exist!!'
+            res.render("form", { message, data })
         }
         else {
-            const randomAlphaNumeric = length => {
-                let s = '';
-                Array.from({ length }).some(() => {
-                    s += Math.random().toString(36).slice(2);
-                    return s.length >= length;
-                });
-                return s.slice(0, length);
-            };
-            let Query1 = `select * from users where email = '${data.email}'`;
-            let Result1 = await ExecuteData(Query1);
-            if (Result1.length > 0) {
-                // console.log('invalid email');
-                let message = 'Email already Exist!!'
-                res.render("form", { message, data })
-            }
-            else {
-                // storing randomalphanumeric of 4 digits into salt, and 12 digits into key.
-                let salt = randomAlphaNumeric(4);
-                var key = randomAlphaNumeric(12);
-                // console.log(key);
-                let password = `${data.password}${salt}`;
-                let isActive = 0;
-                // console.log(password);
-                let hashedpwd = md5(password);
-                // console.log(hashedpwd);
-                let query = `insert into users(first_name,last_name,email,mobileno,salt,pwd,activation_key,isactive) value('${data.firstname}','${data.lastname}','${data.email}','${data.mobilenumber}','${salt}','${hashedpwd}','${key}' , ${isActive})`;
-                // console.log(query);
-                let result = await ExecuteData(query);
-                let id = result.insertId;
-                // console.log(id);
-                res.render("save", { id, key });
-            }
+            // storing randomalphanumeric of 4 digits into salt, and 12 digits into key.
+            let salt = randomAlphaNumeric(4);
+            var key = randomAlphaNumeric(12);
+            // console.log(key);
+            let password = `${data.password}${salt}`;
+            let isActive = 0;
+            // console.log(password);
+            let hashedpwd = md5(password);
+            // console.log(hashedpwd);
+            let query = `insert into users(first_name,last_name,email,mobileno,salt,pwd,activation_key,isactive) value('${data.firstname}','${data.lastname}','${data.email}','${data.mobilenumber}','${salt}','${hashedpwd}','${key}' , ${isActive})`;
+            // console.log(query);
+            let result = await ExecuteData(query);
+            let id = result.insertId;
+            // console.log(id);
+            res.render("save", { id, key });
         }
+
     }
     catch (err) {
         console.log(err);
@@ -164,7 +157,7 @@ app.post("/logsave", async (req, res) => {
                 let jwtSecretKey = process.env.JWT_SECRET_KEY;
                 let data = {
                     time: Date(),
-                    userId: result.user_id
+                    userId: result[0].user_id
                 }
                 const token = jwt.sign(data, jwtSecretKey, { expiresIn: '1h' });
                 res.cookie('token', token, { expires: new Date(Date.now() + 3600000), httpOnly: true })
@@ -383,67 +376,79 @@ app.get("/report", AuthMiddle, function (req, res) {
 });
 
 app.get("/result", AuthMiddle, function (req, res) {
-    let l = parseInt(req.query.p);
-    if (l < 1 || isNaN(l)) {
-        l = 1;
-    }
-    if (l > 10) {
-        l = 10;
-    }
-    let offset = (Number(l) - 1) * 60;
-
-    let res_query = `select s.id,s.firstname,sum(e.obtain_theorymarks) as ter_ob_the,sum(e.obtain_practicalmarks) as ter_ob_pre from student_master s
-    inner join exam_master e
-    on s.id = e.student_id 
-    group by s.id,e.exam_type limit 60 offset ${offset}`;
-
-    connection.query(res_query, function (err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("data fetched");
+    try {
+        let l = parseInt(req.query.p);
+        if (l < 1 || isNaN(l)) {
+            l = 1;
         }
-        let arr = [];
-        console.log(result.length);
-        for (let i = 0; i < result.length; i += 3) {
-            let sum = 0;
-            for (let j = i; j < i + 3; j++) {
-                let theorymarks = result[j].ter_ob_the;
-                // console.log(theorymarks);
-                let practicalmarks = result[j].ter_ob_pre;
-                // console.log(practicalmarks);
-                sum += theorymarks + practicalmarks;
-            }
-            arr.push(sum);
+        if (l > 10) {
+            l = 10;
         }
-        let count = 0;
-        // console.log(arr);
-        res.render("result", { l, data: result, arr, count });
-    });
-});
+        let offset = (Number(l) - 1) * 60;
 
-app.get("/resultdetails", AuthMiddle, function (req, res) {
-    let id = req.query.id;
-    console.log(req.query);
-    console.log(id);
-    let query3 = `select s.id, s.firstname ,e.sub_id,e.exam_type, k.sub_name,e.obtain_theorymarks ,e.obtain_practicalmarks from student_master s 
-    left join exam_master e on  s.id= e.student_id 
-    left join subject_master k on e.sub_id = k.sub_id
-       where s.id=${id}`;
+        let res_query = `select s.id,s.firstname,sum(e.obtain_theorymarks) as ter_ob_the,sum(e.obtain_practicalmarks) as ter_ob_pre from student_master s
+        inner join exam_master e
+        on s.id = e.student_id 
+        group by s.id,e.exam_type limit 60 offset ${offset}`;
 
-    connection.query(query3, function (err, result) {
-        let query4 = `  select count(studentid)as atten from attendence_master where stu_status="present" and studentid=${id}`;
-        connection.query(query4, function (err, result2) {
+        connection.query(res_query, function (err, result) {
             if (err) {
                 console.log(err);
             } else {
                 console.log("data fetched");
             }
-            console.log(result2);
-            res.render("resultdetails", { data: result, atten: result2 });
+            let arr = [];
+            console.log(result.length);
+            for (let i = 0; i < result.length; i += 3) {
+                let sum = 0;
+                for (let j = i; j < i + 3; j++) {
+                    let theorymarks = result[j].ter_ob_the;
+                    // console.log(theorymarks);
+                    let practicalmarks = result[j].ter_ob_pre;
+                    // console.log(practicalmarks);
+                    sum += theorymarks + practicalmarks;
+                }
+                arr.push(sum);
+            }
+            let count = 0;
+            // console.log(arr);
+            res.render("result", { l, data: result, arr, count });
         });
-        // console.log(result);
-    });
+    }
+    catch (err) {
+
+    }
+
+});
+
+app.get("/resultdetails", AuthMiddle, function (req, res) {
+    try {
+        let id = req.query.id;
+        console.log(req.query);
+        console.log(id);
+        let query3 = `select s.id, s.firstname ,e.sub_id,e.exam_type, k.sub_name,e.obtain_theorymarks ,e.obtain_practicalmarks from student_master s 
+        left join exam_master e on  s.id= e.student_id 
+        left join subject_master k on e.sub_id = k.sub_id
+           where s.id=${id}`;
+
+        connection.query(query3, function (err, result) {
+            let query4 = `  select count(studentid)as atten from attendence_master where stu_status="present" and studentid=${id}`;
+            connection.query(query4, function (err, result2) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("data fetched");
+                }
+                console.log(result2);
+                res.render("resultdetails", { data: result, atten: result2 });
+            });
+            // console.log(result);
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+
 });
 
 app.get("/Dashboard/searching", AuthMiddle, function (req, res) {
