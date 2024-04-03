@@ -1,6 +1,6 @@
 const { ExecuteData } = require("../connection");
 const md5 = require("md5")
-const mysql = require("mysql");
+
 
 exports.registersave = async (req, res) => {
     try {

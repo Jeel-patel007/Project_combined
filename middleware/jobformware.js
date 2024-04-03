@@ -4,7 +4,7 @@ module.exports = async function jobformware(req, res, next) {
     console.log('inside middleware');
     let data = req.body;
     console.log(data);
-    var phoneno = /^\d{10}$/;
+    let phoneno = /^\d{10}$/;
     let nameregex = /^[a-zA-Z\s]*$/;
     const regEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     let Values = Object.values(data);

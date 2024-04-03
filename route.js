@@ -15,6 +15,7 @@ const { ajaxstatecity, ajaxstate, ajaxcity } = require("./controller/ajaxstateci
 const { ajaxform, ajaxinsert, ajaxinsertsave } = require("./controller/ajaxform/ajaxinsert");
 const { ajaxupdatelist, ajaxupdate, ajaxupdatesave } = require("./controller/ajaxform/ajaxupdate");
 const { postapi, posts, postdetails } = require("./controller/jsonplaceholder/post");
+const { htmlcsstask1, htmlcsstask2, htmlcsstask3 } = require("./controller/htmlcsstask/taskhandler");
 
 
 const router = express.Router();
@@ -54,5 +55,8 @@ router.route("/ajaxdatasave").post(AuthMiddle, ajaxupdatesave);
 router.route("/Dashboard/postapi").get(AuthMiddle, postapi);
 router.route("/post").get(AuthMiddle, posts)
 router.route("/postdetails/:id").get(AuthMiddle, postdetails);
+router.route("/Dashboard/htmlcsstask1").get(AuthMiddle, htmlcsstask1);
+router.route("/Dashboard/htmlcsstask2").get(AuthMiddle, htmlcsstask2);
+router.route("/Dashboard/htmlcsstask3").get(AuthMiddle, htmlcsstask3)
 
 module.exports = router;
