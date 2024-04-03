@@ -46,9 +46,6 @@ function nextPrev(n) {
     // Otherwise, display the correct tab:
     showTab(currentTab);
 }
-
-
-
 function fixStepIndicator(n) {
     // This function removes the "active" class of all steps...
     var i, x = document.getElementsByClassName("step");
@@ -63,9 +60,7 @@ async function SubmitForm() {
     if (!validateForm(currentTab)) {
         return false;
     }
-
     let formData = document.getElementById("refForm");
-
     let details = new FormData(formData);
     const params = new URLSearchParams(details);
     const jobdata = await new Response(params).text();
@@ -81,8 +76,10 @@ async function SubmitForm() {
         body: jobdata
 
     })
-    console.log(data);
 
+    let dataresult = await data.json();
+    console.log(dataresult);
+    document.getElementById("message").innerText = 'data Inserted'
 
 }
 async function UpdateForm() {
@@ -97,7 +94,7 @@ async function UpdateForm() {
     const params = new URLSearchParams(details);
     const jobdata = await new Response(params).text();
 
-    var result = 'firstname=jeel'
+
     console.log(typeof (result));
 
     let data = await fetch("http://localhost:8084/ajaxdatasave", {
@@ -108,9 +105,9 @@ async function UpdateForm() {
         body: jobdata
 
     })
-    console.log(data);
-
-
+    let dataresult = await data.json();
+    console.log(dataresult);
+    document.getElementById("message").innerText = 'data updated'
 }
 
 function addrow1() {

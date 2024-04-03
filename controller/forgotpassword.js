@@ -1,8 +1,6 @@
 const { ExecuteData } = require("../connection");
 const md5 = require("md5")
 
-
-
 exports.forgotpassword = (req, res) => {
     res.render("forgetpws");
 };

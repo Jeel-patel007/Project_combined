@@ -1,11 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path")
-const mysql = require("mysql");
-const md5 = require("md5");
-const ValidateMiddle = require("./middleware/middleware");
-const AuthMiddle = require("./middleware/authware")
-const jwt = require("jsonwebtoken");
+// const mysql = require("mysql");
+// const md5 = require("md5");
+// const ValidateMiddle = require("./middleware/middleware");
+// const AuthMiddle = require("./middleware/authware")
+// const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const router = require('./route')
 const app = express();

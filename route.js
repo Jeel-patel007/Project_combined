@@ -47,10 +47,10 @@ router.route("/ajaxstatedata").get(AuthMiddle, ajaxcity);
 router.route("/state").get(AuthMiddle, ajaxstate);
 router.route("/Dashboard/ajaxform").get(AuthMiddle, ajaxform);
 router.route("/ajaxdatainsert").get(AuthMiddle, ajaxinsert);
-router.route("/ajaxinsert").get(AuthMiddle, ajaxinsertsave);
+router.route("/ajaxinsert").post(AuthMiddle, ajaxinsertsave);
 router.route("/ajaxupdate").get(AuthMiddle, ajaxupdatelist);
 router.route("/ajaxupdatedata").get(AuthMiddle, ajaxupdate);
-router.route("/ajaxdatasave").get(AuthMiddle, ajaxupdatesave);
+router.route("/ajaxdatasave").post(AuthMiddle, ajaxupdatesave);
 router.route("/Dashboard/postapi").get(AuthMiddle, postapi);
 router.route("/post").get(AuthMiddle, posts)
 router.route("/postdetails/:id").get(AuthMiddle, postdetails);
