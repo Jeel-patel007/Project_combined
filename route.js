@@ -1,6 +1,7 @@
 const express = require("express");
 const ValidateMiddle = require("./middleware/middleware");
-const AuthMiddle = require("./middleware/authware")
+const AuthMiddle = require("./middleware/authware");
+const jobformware = require("./middleware/jobformware");
 const { displaindex, registeriser } = require("./controller/pageindex");
 const { registersave, activeuser } = require("./controller/registeruser");
 const { loginuser, loginusersave } = require("./controller/loginuser");
@@ -15,9 +16,8 @@ const { ajaxform, ajaxinsert, ajaxinsertsave } = require("./controller/ajaxform/
 const { ajaxupdatelist, ajaxupdate, ajaxupdatesave } = require("./controller/ajaxform/ajaxupdate");
 const { postapi, posts, postdetails } = require("./controller/jsonplaceholder/post");
 
+
 const router = express.Router();
-
-
 
 
 router.route("/").get(displaindex);
@@ -47,7 +47,7 @@ router.route("/ajaxstatedata").get(AuthMiddle, ajaxcity);
 router.route("/state").get(AuthMiddle, ajaxstate);
 router.route("/Dashboard/ajaxform").get(AuthMiddle, ajaxform);
 router.route("/ajaxdatainsert").get(AuthMiddle, ajaxinsert);
-router.route("/ajaxinsert").post(AuthMiddle, ajaxinsertsave);
+router.route("/ajaxinsert").post(AuthMiddle, jobformware, ajaxinsertsave);
 router.route("/ajaxupdate").get(AuthMiddle, ajaxupdatelist);
 router.route("/ajaxupdatedata").get(AuthMiddle, ajaxupdate);
 router.route("/ajaxdatasave").post(AuthMiddle, ajaxupdatesave);
