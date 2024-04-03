@@ -3,8 +3,8 @@ var bodyParser = require("body-parser");
 var path = require("path")
 var mysql = require("mysql");
 var md5 = require("md5");
-var ValidateMiddle = require("./Middleware/middleware");
-const AuthMiddle = require("./Middleware/Authware")
+var ValidateMiddle = require("./middleware/middleware");
+const AuthMiddle = require("./middleware/Authware")
 var jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
@@ -373,12 +373,13 @@ app.get("/result", AuthMiddle, function (req, res) {
         if (l > 10) {
             l = 10;
         }
-        let offset = (Number(l) - 1) * 60;
+        let limit = 60;
+        let offset = (Number(l) - 1) * limit;
 
         let res_query = `select s.id,s.firstname,sum(e.obtain_theorymarks) as ter_ob_the,sum(e.obtain_practicalmarks) as ter_ob_pre from student_master s
         inner join exam_master e
         on s.id = e.student_id 
-        group by s.id,e.exam_type limit 60 offset ${offset}`;
+        group by s.id,e.exam_type limit ${limit} offset ${offset}`;
 
         connection.query(res_query, function (err, result) {
             if (err) {
@@ -413,6 +414,7 @@ app.get("/result", AuthMiddle, function (req, res) {
 app.get("/resultdetails", AuthMiddle, function (req, res) {
     try {
         let id = req.query.id;
+
         console.log(req.query);
         console.log(id);
         let query3 = `select s.id, s.firstname ,e.sub_id,e.exam_type, k.sub_name,e.obtain_theorymarks ,e.obtain_practicalmarks from student_master s 
@@ -421,16 +423,22 @@ app.get("/resultdetails", AuthMiddle, function (req, res) {
            where s.id=${id}`;
 
         connection.query(query3, function (err, result) {
-            let query4 = `  select count(studentid)as atten from attendence_master where stu_status="present" and studentid=${id}`;
-            connection.query(query4, function (err, result2) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("data fetched");
-                }
-                console.log(result2);
-                res.render("resultdetails", { data: result, atten: result2 });
-            });
+            if (err || result.length == 0) {
+                res.render("serinvalid")
+            }
+            else {
+                let query4 = `  select count(studentid)as atten from attendence_master where stu_status="present" and studentid=${id}`;
+                connection.query(query4, function (err, result2) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("data fetched");
+                    }
+                    console.log(result2);
+                    res.render("resultdetails", { data: result, atten: result2 });
+                });
+            }
+
             // console.log(result);
         });
     }
