@@ -33,8 +33,8 @@ exports.resetpassword = async (req, res) => {
         let result = await ExecuteData(query1);
         console.log(result);
         let salt = result[0].salt;
-        let pwd_entered = `${data.password}${salt}`;
-        let pwd = md5(pwd_entered);
+        let pwdentered = `${data.password}${salt}`;
+        let pwd = md5(pwdentered);
         let query = `update users set pwd = '${pwd}' where user_id = ${result[0].user_id}`;
         await ExecuteData(query);
         res.json('password updated');

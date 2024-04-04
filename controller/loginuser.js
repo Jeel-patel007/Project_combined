@@ -32,12 +32,12 @@ exports.loginusersave = async (req, res) => {
                 res.json('invalid credential')
             }
             else {
-                let jwtsecretKey = process.env.JWT_SECRET_KEY;
+                let jwtsecretkey = process.env.JWT_SECRET_KEY;
                 let data = {
                     time: Date(),
                     userid: result[0].user_id
                 }
-                const token = jwt.sign(data, jwtsecretKey, { expiresIn: '1h' });
+                const token = jwt.sign(data, jwtsecretkey, { expiresIn: '1h' });
                 res.cookie('token', token, { expires: new Date(Date.now() + 3600000), httpOnly: true })
                 res.status(200);
                 res.json('login suceesful')

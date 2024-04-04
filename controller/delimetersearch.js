@@ -4,27 +4,27 @@ exports.delimeter = async (req, res) => {
     try {
         // let ini = 0;
         // fetching  user input from the req.query
-        let disply_string = req.query.user_string;
-        // console.log(disply_string);
-        // if (disply_string.length == 0) {
+        let displaystring = req.query.userstring;
+        // console.log(displaystring);
+        // if (displaystring.length == 0) {
         //   console.log("inside disply string");
         //   ini = 1;
         // }
-        let user_string = req.query.user_string + "_";
+        let userstring = req.query.userstring + "_";
 
         let array = [];
         //slice string on occurrence of special character and store it on the array.
-        for (let i = 0; i < user_string.length; i++) {
-            for (let j = i + 1; j < user_string.length; j++) {
+        for (let i = 0; i < userstring.length; i++) {
+            for (let j = i + 1; j < userstring.length; j++) {
                 if (
-                    user_string[j] == "_" ||
-                    user_string[j] == "^" ||
-                    user_string[j] == "$" ||
-                    user_string[j] == "}" ||
-                    user_string[j] == "{" ||
-                    user_string[j] == ":"
+                    userstring[j] == "_" ||
+                    userstring[j] == "^" ||
+                    userstring[j] == "$" ||
+                    userstring[j] == "}" ||
+                    userstring[j] == "{" ||
+                    userstring[j] == ":"
                 ) {
-                    let arr = user_string.slice(i, j);
+                    let arr = userstring.slice(i, j);
                     array.push(arr);
                     i = j;
                 }
@@ -62,7 +62,7 @@ exports.delimeter = async (req, res) => {
 
         // multiple value in same column will be join withe or operator.
         let arr = [];
-        let detail_query = " ";
+        let detailquery = " ";
         if (firstname.length > 0) {
             let data = firstname.join(" or ");
             arr.push(data);
@@ -92,14 +92,14 @@ exports.delimeter = async (req, res) => {
         // initially it will not show the data so we set initial varible to 0
 
         if (arr.length > 0) {
-            detail_query = "where " + arr.join(" and ");
+            detailquery = "where " + arr.join(" and ");
             // on enter of valid data we will set it to the 1.
             // ini = 1;
         }
-        // console.log(detail_query);
+        // console.log(detailquery);
 
         //sql query to that will  run to mysql database.
-        let query2 = `select * from student_master ${detail_query}`;
+        let query2 = `select * from student_master ${detailquery}`;
         let result2 = await ExecuteData(query2);
         // connection.query(query2, function (err2, result2) {
         //     if (err2) {
@@ -108,13 +108,13 @@ exports.delimeter = async (req, res) => {
         //     } else {
         //         res.render("delimeterorderby", {
         //             data: result2,
-        //             user_string: disply_string,
+        //             userstring: displaystring,
         //         });
         //     }
         // });
         res.render("delimeterorderby", {
             data: result2,
-            user_string: disply_string,
+            userstring: displaystring,
         });
     } catch (err) {
         console.log(err);

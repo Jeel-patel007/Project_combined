@@ -1,10 +1,10 @@
 
-var currentTab = 0; // Current tab is set to be the first tab (0)
+let currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
 
 function showTab(n) {
     let url = window.location.href;
-    var x = document.getElementsByClassName("tab");
+    let x = document.getElementsByClassName("tab");
     x[n].style.display = "block";
     // ... and fix the Previous/Next buttons:
     if (n == 0) {
@@ -30,7 +30,7 @@ function showTab(n) {
 }
 function nextPrev(n) {
     // This function will figure out which tab to display
-    var x = document.getElementsByClassName("tab");
+    let x = document.getElementsByClassName("tab");
     // Exit the function if any field in the current tab is invalid:
     if (n == 1 && !validateForm(currentTab)) return false;
     // Hide the current tab:
@@ -48,7 +48,7 @@ function nextPrev(n) {
 }
 function fixStepIndicator(n) {
     // This function removes the "active" class of all steps...
-    var i, x = document.getElementsByClassName("step");
+    let i, x = document.getElementsByClassName("step");
     for (i = 0; i < x.length; i++) {
         x[i].className = x[i].className.replace(" active", "");
     }
@@ -65,7 +65,7 @@ async function SubmitForm() {
     const params = new URLSearchParams(details);
     const jobdata = await new Response(params).text();
 
-    var result = 'firstname=jeel'
+    let result = 'firstname=jeel'
     console.log(typeof (result));
 
     let data = await fetch("http://localhost:8084/ajaxinsert", {
@@ -83,7 +83,7 @@ async function SubmitForm() {
 
 }
 async function UpdateForm() {
-    // alert('hello jd')
+
     if (!validateForm(currentTab)) {
         return false;
     }
@@ -160,14 +160,14 @@ function Removeref() {
 
 
 function validateForm(tabIndex) {
-    var phoneno = /^\d{10}$/;
+    let phoneno = /^\d{10}$/;
     const regEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    var namereg = /^[a-zA-Z\s]*$/;
-    var datereg = /^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/;
+    let namereg = /^[a-zA-Z\s]*$/;
+    let datereg = /^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/;
     let isValid = true;
     Remerror();
     if (tabIndex == 0) {
-        var require_field = document.getElementsByClassName("required1");
+        let require_field = document.getElementsByClassName("required1");
         // console.log(require_field[0].parentNode);
         for (const i of require_field) {
             if (i.value === "") {
@@ -175,23 +175,23 @@ function validateForm(tabIndex) {
                 isValid = false;
             }
         }
-        var isChecked = document.querySelectorAll('input[name=gender]:checked');
+        let isChecked = document.querySelectorAll('input[name=gender]:checked');
         if (!isChecked.length) {
-            var elem = document.getElementById("gender");
+            let elem = document.getElementById("gender");
             elem.parentNode.innerHTML += `<span class="dynamic" > this field can't be empty</span>`;
             isValid = false;
         }
         let phoneValidate = document.getElementById("phonenumber").value;
         if (!(phoneValidate.match(phoneno))) {
             // document.getElementById("validphonenumber").innerHTML = ("enter valid phonenumber!");
-            var elem = document.getElementById("phonenumber");
+            let elem = document.getElementById("phonenumber");
             elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid mobileno </span>`;
             isValid = false;
         }
 
         let birthvalid = document.getElementById("dateofbirth").value;
         if (!birthvalid.match(datereg)) {
-            var elem = document.getElementById("dateofbirth");
+            let elem = document.getElementById("dateofbirth");
             elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid date</span>`;
             isValid = false;
         }
@@ -213,14 +213,6 @@ function validateForm(tabIndex) {
     // console.log(tabIndex);
 
     if (tabIndex == 1) {
-        // var require_field = document.getElementsByClassName("required3");
-        // // console.log(require_field[0].parentNode);
-        // for (const i of require_field) {
-        //     if (i.value === "") {
-        //         i.parentNode.innerHTML += `<span class="dynamic" > Required</span>`;
-        //         isValid = false;
-        //     }
-        // }
 
         let boardvalid = document.getElementsByName("board[]");
         let yearvalid = document.getElementsByName("year[]");
@@ -241,7 +233,7 @@ function validateForm(tabIndex) {
             });
 
             if (count == 1 || count == 2) {
-                var elem = document.getElementById("edu_table_error");
+                let elem = document.getElementById("edu_table_error");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please fill all the details</span>`;
                 isValid = false;
             }
@@ -255,13 +247,13 @@ function validateForm(tabIndex) {
         let tovalid = document.getElementsByName("to[]");
         let work = [];
         let count = 0;
-        // console.log(yearvalid);
+
         for (let i = 0; i < companyvalid.length; i++) {
             work.push(companyvalid[i]);
             work.push(designationvalid[i]);
             work.push(fromvalid[i]);
             work.push(tovalid[i]);
-            // console.log(edu);
+
 
             work.forEach((element) => {
                 if (element.value == "") {
@@ -270,7 +262,7 @@ function validateForm(tabIndex) {
             });
 
             if (count == 1 || count == 2 || count == 3) {
-                var elem = document.getElementById("work_error");
+                let elem = document.getElementById("work_error");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please fill all the details</span>`;
                 isValid = false;
             }
@@ -287,8 +279,6 @@ function validateForm(tabIndex) {
             ref.push(refnumbervalid[i]);
             ref.push(refrelation[i]);
 
-            // console.log(edu);
-
             ref.forEach((element) => {
                 if (element.value == "") {
                     count++;
@@ -296,14 +286,14 @@ function validateForm(tabIndex) {
             });
 
             if (count == 1 || count == 2) {
-                var elem = document.getElementById("ref_error");
+                let elem = document.getElementById("ref_error");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please fill all the details</span>`;
                 isValid = false;
             }
         }
     }
     if (tabIndex == 3) {
-        // console.log('inside 3rd tab');
+
         let hindivalid = document.getElementById("hindi");
         let hindireadvalid = document.getElementById("hindiread");
         let hindiwritevalid = document.getElementById("hindiwrite");
@@ -326,7 +316,7 @@ function validateForm(tabIndex) {
                 )
             ) {
                 console.log("inside if");
-                var elem = document.getElementById("hindi");
+                let elem = document.getElementById("hindi");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
                 isValid = false;
             }
@@ -338,7 +328,7 @@ function validateForm(tabIndex) {
                 hindispeakvalid.checked
             ) {
                 console.log("inside if");
-                var elem = document.getElementById("hindi");
+                let elem = document.getElementById("hindi");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any language</span>`;
                 isValid = false;
             }
@@ -352,7 +342,7 @@ function validateForm(tabIndex) {
                 )
             ) {
                 console.log("inside if");
-                var elem = document.getElementById("english");
+                let elem = document.getElementById("english");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
                 isValid = false;
             }
@@ -364,7 +354,7 @@ function validateForm(tabIndex) {
                 englishspeakvalid.checked
             ) {
                 console.log("inside if");
-                var elem = document.getElementById("english");
+                let elem = document.getElementById("english");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any language</span>`;
                 isValid = false;
             }
@@ -379,7 +369,7 @@ function validateForm(tabIndex) {
                 )
             ) {
                 console.log("inside if");
-                var elem = document.getElementById("gujrati");
+                let elem = document.getElementById("gujrati");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
                 isValid = false;
             }
@@ -391,7 +381,7 @@ function validateForm(tabIndex) {
                 gujratispeakvalid.checked
             ) {
                 console.log("inside if");
-                var elem = document.getElementById("gujrati");
+                let elem = document.getElementById("gujrati");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any language</span>`;
                 isValid = false;
             }
@@ -418,7 +408,7 @@ function validateForm(tabIndex) {
 
         if (phpvalid.checked) {
             if (!(phpbeginervalid.checked || phpmidetorvalid.checked || phpmastervalid.checked)) {
-                var elem = document.getElementById("php");
+                let elem = document.getElementById("php");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
                 isValid = false;
             }
@@ -426,7 +416,7 @@ function validateForm(tabIndex) {
 
         if (!phpvalid.checked) {
             if ((phpbeginervalid.checked || phpmidetorvalid.checked || phpmastervalid.checked)) {
-                var elem = document.getElementById("php");
+                let elem = document.getElementById("php");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any technology</span>`;
                 isValid = false;
             }
@@ -435,14 +425,14 @@ function validateForm(tabIndex) {
 
         if (mysqlvalid.checked) {
             if (!(mysqlbeginervalid.checked || mysqlmidetorvalid.checked || mysqlmastervalid.checked)) {
-                var elem = document.getElementById("mysql");
+                let elem = document.getElementById("mysql");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
                 isValid = false;
             }
         }
         if (!mysqlvalid.checked) {
             if ((mysqlbeginervalid.checked || mysqlmidetorvalid.checked || mysqlmastervalid.checked)) {
-                var elem = document.getElementById("mysql");
+                let elem = document.getElementById("mysql");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any technology</span>`;
                 isValid = false;
             }
@@ -450,28 +440,28 @@ function validateForm(tabIndex) {
 
         if (laravelvalid.checked) {
             if (!(laravelbeginervalid.checked || laravelmidetorvalid.checked || laravelmastervalid.checked)) {
-                var elem = document.getElementById("laravel");
+                let elem = document.getElementById("laravel");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
                 isValid = false;
             }
         }
         if (!laravelvalid.checked) {
             if ((laravelbeginervalid.checked || laravelmidetorvalid.checked || laravelmastervalid.checked)) {
-                var elem = document.getElementById("laravel");
+                let elem = document.getElementById("laravel");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any technology</span>`;
                 isValid = false;
             }
         }
         if (oraclevalid.checked) {
             if (!(oraclebeginervalid.checked || oraclemidetorvalid.checked || oraclemastervalid.checked)) {
-                var elem = document.getElementById("oracle");
+                let elem = document.getElementById("oracle");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any option</span>`;
                 isValid = false;
             }
         }
         if (!oraclevalid.checked) {
             if ((oraclebeginervalid.checked || oraclemidetorvalid.checked || oraclemastervalid.checked)) {
-                var elem = document.getElementById("oracle");
+                let elem = document.getElementById("oracle");
                 elem.parentNode.innerHTML += `<span class="dynamic" >please select any technology</span>`;
                 isValid = false;
             }
@@ -479,7 +469,7 @@ function validateForm(tabIndex) {
     }
 
     if (tabIndex == 6) {
-        var require_field = document.getElementsByClassName("required2");
+        let require_field = document.getElementsByClassName("required2");
         // console.log(require_field[0].parentNode);
         for (const i of require_field) {
             if (i.value === "") {
@@ -489,61 +479,7 @@ function validateForm(tabIndex) {
         }
     }
 
-    // let marks1valid = document.getElementById("marks1");
 
-    // //  let companyname1 = document.getElementById("companyname1");
-
-    // let fromvalid = document.getElementById("from1").value;
-    // let tovalid = document.getElementById("to1").value;
-    // let passyearvalid = document.getElementById("year1").value;
-
-
-    // if (isNaN(marks1valid.value) || (marks1valid.value < 0 || marks1valid.value > 100)) {
-    //     var elem = document.getElementById("marks1");
-    //     elem.parentNode.innerHTML += `<span class="dynamic" >please enter a valid percentage</span>`;
-    //     isValid = false;
-    // }
-
-
-
-
-
-
-    // if (!(phoneValidate.match(phoneno))) {
-    //     // document.getElementById("validphonenumber").innerHTML = ("enter valid phonenumber!");
-    //     var elem = document.getElementById("phonenumber");
-    //     elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid mobileno </span>`;
-    //     isValid = false;
-    // }
-    // if ((!phonerefValidate.match(phoneno) && phonerefValidate.length > 0)) {
-    //     // document.getElementById("validphonenumber").innerHTML = ("enter valid phonenumber!");
-    //     var elem = document.getElementById("refnumber1");
-    //     elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid mobileno </span>`;
-    //     isValid = false;
-    // }
-
-    // if (!emailValidate.match(regEmail)) {
-    //     var elem = document.getElementById("email");
-    //     elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid email</span>`;
-
-    //     isValid = false;
-    // }
-    // if (!birthvalid.match(datereg)) {
-    //     var elem = document.getElementById("dateofbirth");
-    //     elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid date</span>`;
-    //     isValid = false;
-    // }
-    // if (!fromvalid.match(datereg)) {
-    //     var elem = document.getElementById("fromerror");
-    //     elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid date</span>`;
-    //     isValid = false;
-    // }
-    // if (!tovalid.match(datereg)) {
-    //     var elem = document.getElementById("fromerror");
-    //     elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid date</span>`;
-    //     isValid = false;
-    // }
-    // console.log(isValid);
 
     if (isValid) {
         document.getElementsByClassName("step")[currentTab].className += " finish";
@@ -553,7 +489,7 @@ function validateForm(tabIndex) {
     return isValid;
 }
 function Remerror() {
-    var dynamic_class = document.querySelectorAll(".dynamic");
+    let dynamic_class = document.querySelectorAll(".dynamic");
     for (const i of dynamic_class) {
         i.remove();
     }
@@ -565,7 +501,7 @@ const validateName = (inputname) => {
     // console.log(inputfield);
     let nameregex = /^[a-zA-Z\s]*$/;
     if (!nameregex.test(inputfield)) {
-        var elem = document.getElementById(inputname);
+        let elem = document.getElementById(inputname);
         elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid input</span>`
         // console.log('inside validate false');
         return isValid = false;
