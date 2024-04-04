@@ -48,7 +48,7 @@ router.route("/ajaxstatedata").get(AuthMiddle, ajaxcity);
 router.route("/state").get(AuthMiddle, ajaxstate);
 router.route("/Dashboard/ajaxform").get(AuthMiddle, ajaxform);
 router.route("/ajaxdatainsert").get(AuthMiddle, ajaxinsert);
-router.route("/ajaxinsert").post(AuthMiddle, jobformware, ajaxinsertsave);
+router.route("/ajaxinsert").post(AuthMiddle, ajaxinsertsave);
 router.route("/ajaxupdate").get(AuthMiddle, ajaxupdatelist);
 router.route("/ajaxupdatedata").get(AuthMiddle, ajaxupdate);
 router.route("/ajaxdatasave").post(AuthMiddle, ajaxupdatesave);

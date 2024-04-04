@@ -18,7 +18,7 @@ exports.ajaxinsertsave = async (req, res) => {
          '${data.phonenumber}','${data.zipcode}','${data.gender}','${data.dateofbirth}','${data.rstatus}')`;
         let result = await ExecuteData(query1);
         let id = result.insertId;
-        console.log(data.board);
+        // console.log(data.board);
         for (let i = 0; i < data.board.length; i++) {
             if (data.board[i]) {
                 let query2 = `insert into education(id,coursename,yearofpassing,percentage) values(${id},'${data.board[i]}',${data.year[i]},${data.marks[i]})`;
@@ -80,9 +80,10 @@ exports.ajaxinsertsave = async (req, res) => {
                 await ExecuteData(query13);
             }
         }
+        res.json('data inserted');
     }
     catch (err) {
         console.log(err);
     }
-    res.json('data inserted');
+
 };

@@ -10,7 +10,7 @@ exports.searching = async (req, res) => {
         let profession = req.query.profession;
         let detail_query = " ";
 
-        if (req.query.id && !isNaN(id)) {
+        if (req.query.id) {
             detail_query = ` where id in (${id})`;
         } else {
             let arr = [];

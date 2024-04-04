@@ -114,5 +114,6 @@ function showWinner(x, y, z) {
 
 function Draw() {
   alert('Match is draw:');
+  window.location.reload();
 }
 

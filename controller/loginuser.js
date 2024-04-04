@@ -21,7 +21,10 @@ exports.loginusersave = async (req, res) => {
             res.status(404);
             res.json('invalid credential');
         }
-
+        else if (result[0].isactive == 0) {
+            res.status(404);
+            res.json('your account is not activated');
+        }
         else {
             let pwdhashed = md5(`${pwd}${result[0].salt}`);
             // console.log(pwdhashed);

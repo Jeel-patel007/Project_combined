@@ -84,13 +84,7 @@
                                 placeholder="Password">
                         </td>
                     </tr>
-                    <tr>
-                        <td>
 
-                            <input type="text" id="password2" name="password2" class="required pwd" class="pwd"
-                                tabindex="3" placeholder="Password">
-                        </td>
-                    </tr>
                     <tr>
                         <td>
                             <input type="button" id="enter" value="Enter" onclick="forgetFunc()" class="fourth-button">
@@ -136,7 +130,7 @@
                 let pwd = document.getElementsByClassName("pwd");
                 console.log(pwd);
                 pwd[0].style.display = 'block';
-                pwd[1].style.display = 'block';
+
 
                 document.getElementById("enter").style.display = 'none';
                 document.getElementById("reset").style.display = 'block';

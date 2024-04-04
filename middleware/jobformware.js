@@ -1,6 +1,6 @@
 
 module.exports = async function jobformware(req, res, next) {
-    isValid = true;
+    let isValid = true;
     console.log('inside middleware');
     let data = req.body;
     console.log(data);

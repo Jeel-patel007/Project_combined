@@ -166,6 +166,7 @@ function validateForm(tabIndex) {
     let datereg = /^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/;
     let isValid = true;
     Remerror();
+
     if (tabIndex == 0) {
         let require_field = document.getElementsByClassName("required1");
         // console.log(require_field[0].parentNode);
@@ -190,6 +191,12 @@ function validateForm(tabIndex) {
         }
 
         let birthvalid = document.getElementById("dateofbirth").value;
+        let zipcodevalid = document.getElementById("zipcode").value;
+        if ((zipcodevalid.length != 6) || isNaN(zipcodevalid)) {
+            var elem = document.getElementById("zipcode");
+            elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid zipcode</span>`;
+            isValid = false;
+        }
         if (!birthvalid.match(datereg)) {
             let elem = document.getElementById("dateofbirth");
             elem.parentNode.innerHTML += `<span class="dynamic" > enter a valid date</span>`;
@@ -206,9 +213,7 @@ function validateForm(tabIndex) {
         if (!validateName("city")) {
             isValid = false;
         }
-        // if (!validateName("board1")) {
-        //     isValid = false;
-        // }
+
     }
     // console.log(tabIndex);
 
@@ -219,12 +224,12 @@ function validateForm(tabIndex) {
         let marksvalid = document.getElementsByName("marks[]");
         let edu = [];
         let count = 0;
-        console.log(yearvalid);
+        // console.log(yearvalid);
         for (let i = 0; i < boardvalid.length; i++) {
             edu.push(boardvalid[i]);
             edu.push(yearvalid[i]);
             edu.push(marksvalid[i]);
-            console.log(edu);
+            // console.log(edu);
 
             edu.forEach((element) => {
                 if (element.value == "") {
@@ -238,6 +243,32 @@ function validateForm(tabIndex) {
                 isValid = false;
             }
         }
+        let namereg = /^[a-zA-Z\s]*$/;
+        boardvalid.forEach((element) => {
+            console.log(element.value);
+            if (!element.value.match(namereg)) {
+                let elem = document.getElementById("edu_table_error");
+                elem.parentNode.innerHTML += `<span class="dynamic" >please fill valid board name</span>`;
+                isValid = false;
+            }
+        })
+
+        yearvalid.forEach((element) => {
+            if (element.value.length != 4 && isNaN(element.value)) {
+                let elem = document.getElementById("edu_table_error");
+                elem.parentNode.innerHTML += `<span class="dynamic" >please fill valid year</span>`;
+                isValid = false;
+            }
+        })
+
+        marksvalid.forEach((element) => {
+            if ((element.value < 0 || element.value > 100) || isNaN(element.value)) {
+                let elem = document.getElementById("edu_table_error");
+                elem.parentNode.innerHTML += `<span class="dynamic" >please fill percentage</span>`;
+                isValid = false;
+            }
+        })
+
     }
     if (tabIndex == 2) {
 
@@ -267,6 +298,26 @@ function validateForm(tabIndex) {
                 isValid = false;
             }
         }
+        let datereg = /^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/;
+        fromvalid.forEach((element) => {
+            console.log(element.value);
+            if (!element.value.match(datereg) && element.value != "") {
+                console.log(element.value);
+                let elem = document.getElementById("work_error");
+                elem.parentNode.innerHTML += `<span class="dynamic" >please fill valid start date</span>`;
+                isValid = false;
+            }
+        })
+        tovalid.forEach((element) => {
+            console.log(element.value);
+            if (!element.value.match(datereg) && element.value != "") {
+                let elem = document.getElementById("work_error");
+                elem.parentNode.innerHTML += `<span class="dynamic" >please fill valid end date</span>`;
+                isValid = false;
+            }
+        })
+
+
     }
     if (tabIndex == 5) {
         let refnamevalid = document.getElementsByName("refname[]");
@@ -291,6 +342,33 @@ function validateForm(tabIndex) {
                 isValid = false;
             }
         }
+
+        let namereg = /^[a-zA-Z\s]*$/;
+        refnamevalid.forEach((element) => {
+            // console.log(element.value);
+            if (!element.value.match(namereg)) {
+                let elem = document.getElementById("ref_error");
+                elem.parentNode.innerHTML += `<span class="dynamic" >please fill valid reference name</span>`;
+                isValid = false;
+            }
+        })
+        refrelation.forEach((element) => {
+            // console.log(element.value);
+            if (!element.value.match(namereg)) {
+                let elem = document.getElementById("ref_error");
+                elem.parentNode.innerHTML += `<span class="dynamic" >please fill valid relation name</span>`;
+                isValid = false;
+            }
+        })
+
+        let phoneno = /^\d{10}$/;
+        refnumbervalid.forEach((element) => {
+            if (!element.value.match(phoneno)) {
+                let elem = document.getElementById("ref_error");
+                elem.parentNode.innerHTML += `<span class="dynamic" >please fill valid contanct number</span>`;
+                isValid = false;
+            }
+        })
     }
     if (tabIndex == 3) {
 
