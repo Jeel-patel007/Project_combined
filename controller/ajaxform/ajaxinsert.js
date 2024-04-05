@@ -66,7 +66,7 @@ exports.ajaxinsertsave = async (req, res) => {
                 await ExecuteData(query9);
             }
         }
-        let query10 = `insert into preference(id,preferedlocation,noticeperiod,expectedctc,currentctc,department) values (${id},'${data.preferedlocation}','${data.noticeperiod}',${data.expectedctc},${data.currentctc},'${data.department}')`;
+        let query10 = `insert into preference(id,preferedlocation,noticeperiod,expectedctc,currentctc,department) values (${id},'${data.preferedlocation}','${data.noticeperiod}','${data.expectedctc}','${data.currentctc}','${data.department}')`;
         await ExecuteData(query10);
         for (let i = 0; i <= data.refname.length; i++) {
             if (data.refname[i]) {

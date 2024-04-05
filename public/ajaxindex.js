@@ -555,6 +555,20 @@ function validateForm(tabIndex) {
                 isValid = false;
             }
         }
+        let currnetctc = document.getElementById("currentctc");
+        let expectedctc = document.getElementById("expectedctc");
+
+        if (isNaN(currnetctc.value)) {
+            let elem = document.getElementById("currentctc");
+            elem.parentNode.innerHTML += `<span class="dynamic" >enter a valid ctc</span>`;
+            isValid = false;
+        }
+        if (isNaN(expectedctc.value)) {
+            let elem = document.getElementById("expectedctc");
+            elem.parentNode.innerHTML += `<span class="dynamic" >enter a valid ctc</span>`;
+            isValid = false;
+        }
+
     }
 
 

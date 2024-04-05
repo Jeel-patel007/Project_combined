@@ -3,8 +3,6 @@ const md5 = require("md5")
 const jwt = require("jsonwebtoken");
 
 
-
-
 exports.loginuser = (req, res) => {
     res.render("login");
 };
